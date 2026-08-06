@@ -15,17 +15,28 @@ jQuery(function ($) {
 
       selection.each(function (attachment) {
         const id = attachment.id.toString();
-        const full = attachment.attributes.url; // Always full size
+        const full = attachment.attributes.url;
+        const isImage = attachment.attributes.type === 'image';
+        const title = attachment.attributes.title || attachment.attributes.filename || '';
+        const thumb = isImage
+          ? (attachment.attributes.sizes && attachment.attributes.sizes.thumbnail ? attachment.attributes.sizes.thumbnail.url : full)
+          : (attachment.attributes.icon || full);
 
         if (!currentIDs.includes(id)) {
           currentIDs.push(id);
 
-          imageList.append(
-            `<li data-id="${id}">
-              <img src="${full}" alt="" />
-              <span class="remove-image"><span class="text-remove-btn hidden">Remove</span></span>
-            </li>`
-          );
+          const itemHtml = isImage
+            ? `<li data-id="${id}" class="is-image">
+                <img src="${thumb}" alt="${title}" />
+                <span class="remove-image"><span class="text-remove-btn hidden">Remove</span></span>
+              </li>`
+            : `<li data-id="${id}" class="is-file">
+                <img src="${thumb}" alt="${title}" class="file-icon" />
+                <span class="file-title">${title}</span>
+                <span class="remove-image"><span class="text-remove-btn hidden">Remove</span></span>
+              </li>`;
+
+          imageList.append(itemHtml);
         }
       });
 

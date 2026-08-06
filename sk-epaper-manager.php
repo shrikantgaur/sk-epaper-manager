@@ -3,7 +3,7 @@
 Plugin Name: SK ePaper Manager
 Text Domain: sk-epaper-manager
 Description: SK ePaper Manager lets you upload, manage, and display beautiful ePapers on your WordPress site.
-Version: 1.1.5
+Version: 1.1.6
 Author: Shri Kant Gaur
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -155,9 +155,22 @@ function sk_epaper_render_image_meta_box( $post ) {
     ?>
     <div>
         <ul class="sk-epaper-image-list">
-            <?php foreach ( $image_ids as $id ) : ?>
-                <li data-id="<?php echo esc_attr( $id ); ?>">
-                    <?php echo wp_get_attachment_image( absint( $id ), 'full' ); ?>
+            <?php foreach ( $image_ids as $id ) :
+                $id = absint( $id );
+                $is_image = wp_attachment_is( 'image', $id );
+                $img_html = wp_get_attachment_image( $id, 'thumbnail', true );
+                $title    = get_the_title( $id );
+                if ( ! $img_html ) {
+                    $file_url = wp_get_attachment_url( $id );
+                    $filename = wp_basename( $file_url );
+                    $img_html = '<span class="dashicons dashicons-pdf"></span><span class="filename">' . esc_html( $filename ) . '</span>';
+                }
+                ?>
+                <li data-id="<?php echo esc_attr( $id ); ?>" class="<?php echo $is_image ? 'is-image' : 'is-file'; ?>">
+                    <?php echo $img_html; ?>
+                    <?php if ( ! $is_image ) : ?>
+                        <span class="file-title"><?php echo esc_html( $title ); ?></span>
+                    <?php endif; ?>
                     <span class="remove-image"><span class="text-remove-btn hidden">Remove</span></span>
                 </li>
             <?php endforeach; ?>

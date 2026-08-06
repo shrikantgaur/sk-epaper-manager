@@ -19,8 +19,10 @@ if (currentPageDisplay) {
 }
 
 function updateSlider() {
-  const translateX = -currentIndex * 100;
-  imageSlider.style.transform = `translateX(${translateX}%)`;
+  if (imageSlider) {
+    const translateX = -currentIndex * 100;
+    imageSlider.style.transform = `translateX(${translateX}%)`;
+  }
   if (currentPageDisplay) {
     currentPageDisplay.textContent = currentIndex + 1;
   }
@@ -32,22 +34,33 @@ function resetZoom() {
   zoomLevel = 1;
   slides.forEach(slide => {
     const img = slide.querySelector('img');
-    img.style.transform = 'scale(1)';
+    if (img) {
+      img.style.transform = 'scale(1)';
+    }
+    const iframe = slide.querySelector('iframe');
+    if (iframe) {
+      iframe.style.transform = 'scale(1)';
+    }
   });
 }
 
 function zoomImage(factor) {
+  if (!slides[currentIndex]) return;
   zoomLevel += factor;
   if (zoomLevel < 1) zoomLevel = 1;
   if (zoomLevel > 5) zoomLevel = 5;
 
-  const currentContainer = slides[currentIndex].querySelector('.zoom-container img');
-  currentContainer.style.transform = `scale(${zoomLevel})`;
+  const currentTarget = slides[currentIndex].querySelector('.zoom-container img, .zoom-container iframe');
+  if (currentTarget) {
+    currentTarget.style.transform = `scale(${zoomLevel})`;
+  }
 }
 
 function updateDownloadLink() {
-  const img = slides[currentIndex].querySelector('img');
-  downloadBtn.href = img.src;
+  if (!slides[currentIndex] || !downloadBtn) return;
+  const slide = slides[currentIndex];
+  const downloadUrl = slide.dataset.downloadUrl || slide.dataset.fileUrl || slide.querySelector('img')?.src || '#';
+  downloadBtn.href = downloadUrl;
 }
 
 if (nextButton && prevButton && imageSlider && slides.length > 0) {
@@ -61,14 +74,20 @@ if (nextButton && prevButton && imageSlider && slides.length > 0) {
     updateSlider();
   });
 
-  zoomInBtn.addEventListener('click', () => {
-    zoomImage(0.5);
-  });
+  if (zoomInBtn) {
+    zoomInBtn.addEventListener('click', () => {
+      zoomImage(0.5);
+    });
+  }
 
-  zoomOutBtn.addEventListener('click', () => {
-    zoomImage(-0.5);
-  });
+  if (zoomOutBtn) {
+    zoomOutBtn.addEventListener('click', () => {
+      zoomImage(-0.5);
+    });
+  }
 
+  updateSlider();
+} else if (slides.length > 0) {
   updateSlider();
 } else {
   console.warn('Slider elements not found.');
@@ -77,11 +96,11 @@ if (nextButton && prevButton && imageSlider && slides.length > 0) {
 // Drag-to-pan
 slides.forEach(slide => {
   const container = slide.querySelector('.zoom-container');
+  if (!container) return;
   let isDown = false;
   let startX, startY, scrollLeft, scrollTop;
 
   container.addEventListener('mousedown', e => {
-    const img = container.querySelector('img');
     if (zoomLevel <= 1) return;
     isDown = true;
     container.classList.add('dragging');
@@ -117,58 +136,64 @@ slides.forEach(slide => {
 if (printBtn) {
   printBtn.addEventListener('click', () => {
     const currentSlide = slides[currentIndex];
+    if (!currentSlide) return;
     const img = currentSlide.querySelector('img');
-    if (!img) return;
+    const fileUrl = currentSlide.dataset.fileUrl || img?.src;
+    if (!fileUrl) return;
 
-    const iframe = document.createElement('iframe');
-    iframe.style.position = 'fixed';
-    iframe.style.width = '0';
-    iframe.style.height = '0';
-    iframe.style.border = '0';
-    document.body.appendChild(iframe);
+    if (img) {
+      const iframe = document.createElement('iframe');
+      iframe.style.position = 'fixed';
+      iframe.style.width = '0';
+      iframe.style.height = '0';
+      iframe.style.border = '0';
+      document.body.appendChild(iframe);
 
-    const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
-    if (!iframeDoc) return;
+      const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
+      if (!iframeDoc) return;
 
-    iframeDoc.open();
-    iframeDoc.write(`
-      <html>
-        <head>
-          <title>Print Page</title>
-          <style>
-            @page {
-              size: A4 portrait;
-              margin: 0;
-            }
-            html, body {
-              margin: 0;
-              padding: 0;
-              height: 100%;
-              width: 100%;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              background: white;
-            }
-            img {
-              width: 100%;
-              height: auto;
-              max-height: 100%;
-              object-fit: contain;
-              page-break-after: avoid;
-            }
-          </style>
-        </head>
-        <body>
-          <img src="${img.src}" onload="window.focus(); window.print(); setTimeout(() => window.close(), 100);" />
-        </body>
-      </html>
-    `);
-    iframeDoc.close();
+      iframeDoc.open();
+      iframeDoc.write(`
+        <html>
+          <head>
+            <title>Print Page</title>
+            <style>
+              @page {
+                size: A4 portrait;
+                margin: 0;
+              }
+              html, body {
+                margin: 0;
+                padding: 0;
+                height: 100%;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: white;
+              }
+              img {
+                width: 100%;
+                height: auto;
+                max-height: 100%;
+                object-fit: contain;
+                page-break-after: avoid;
+              }
+            </style>
+          </head>
+          <body>
+            <img src="${img.src}" onload="window.focus(); window.print(); setTimeout(() => window.close(), 100);" />
+          </body>
+        </html>
+      `);
+      iframeDoc.close();
+    } else {
+      window.open(fileUrl, '_blank');
+    }
   });
 }
 
-if(printAllBtn) {
+if (printAllBtn) {
   printAllBtn.addEventListener('click', () => {
     const iframe = document.createElement('iframe');
     iframe.style.position = 'fixed';
@@ -177,7 +202,8 @@ if(printAllBtn) {
     iframe.style.border = 'none';
     document.body.appendChild(iframe);
 
-    const doc = iframe.contentDocument || iframe.contentWindow.document;
+    const doc = iframe.contentDocument || iframe.contentWindow?.document;
+    if (!doc) return;
 
     doc.open();
     doc.write('<html><head><title>Print All</title><style>');
@@ -204,6 +230,8 @@ if(printAllBtn) {
       const img = slide.querySelector('img');
       if (img) {
         doc.write(`<img src="${img.src}" alt="Slide" />`);
+      } else if (slide.dataset.fileUrl) {
+        doc.write(`<p><a href="${slide.dataset.fileUrl}">${slide.dataset.fileUrl}</a></p>`);
       }
     });
 
@@ -211,8 +239,8 @@ if(printAllBtn) {
     doc.close();
 
     iframe.onload = () => {
-      iframe.contentWindow.focus();
-      iframe.contentWindow.print();
+      iframe.contentWindow?.focus();
+      iframe.contentWindow?.print();
       setTimeout(() => document.body.removeChild(iframe), 1000);
     };
   });

@@ -82,15 +82,22 @@ if ( ! is_array( $sk_epaper_images ) ) {
                                 if ( ! empty( $sk_epaper_images ) ) {
                                     foreach ( $sk_epaper_images as $sk_epaper_attachment_id ) {
                                         $sk_epaper_attachment_id = absint( $sk_epaper_attachment_id );
+                                        $file_url = wp_get_attachment_url( $sk_epaper_attachment_id );
+                                        $is_image = wp_attachment_is( 'image', $sk_epaper_attachment_id );
+                                        $img_tag  = wp_get_attachment_image(
+                                            $sk_epaper_attachment_id,
+                                            'full',
+                                            false,
+                                            array( 'alt' => esc_attr( get_the_title( $sk_epaper_attachment_id ) ) )
+                                        );
 
-                                        echo '<div class="image-slide">';
+                                        echo '<div class="image-slide" data-download-url="' . esc_url( $file_url ) . '" data-file-url="' . esc_url( $file_url ) . '" data-is-image="' . ( $is_image || ! empty( $img_tag ) ? '1' : '0' ) . '">';
                                             echo '<div class="zoom-container">';
-                                                echo wp_get_attachment_image(
-                                                    $sk_epaper_attachment_id,
-                                                    'full',
-                                                    false,
-                                                    array( 'alt' => esc_attr( get_the_title( $sk_epaper_attachment_id ) ) )
-                                                );
+                                                if ( ! empty( $img_tag ) ) {
+                                                    echo $img_tag;
+                                                } else {
+                                                    echo '<iframe src="' . esc_url( $file_url ) . '" class="epaper-pdf-embed" width="100%" height="700px" style="border: none; min-height: 700px; width: 100%;"></iframe>';
+                                                }
                                             echo '</div>';
                                         echo '</div>';
                                     }

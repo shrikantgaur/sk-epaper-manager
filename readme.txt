@@ -4,7 +4,7 @@ Tags: epaper, pdf, newspaper, magazine, image gallery
 Requires at least: 5.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.1.5
+Stable tag: 1.1.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -67,6 +67,10 @@ Yes — the plugin uses template files you can override in your theme for full c
 5. Frontend: Single ePaper view with zoom, print, and download features.
 
 == Changelog ==
+
+= 1.1.6 =
+* Fixed PDF upload visibility in admin edit screen metabox.
+* Fixed frontend JavaScript error when displaying PDF attachments in ePaper viewer.
 
 = 1.1.5 =
 * Fixed direct file access protection in template files to prevent security issues.
