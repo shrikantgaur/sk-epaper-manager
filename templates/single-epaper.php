@@ -10,11 +10,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header();
 
+$post_id = get_the_ID();
+
+// Increment View Count
+if ( is_singular( 'epaper' ) ) {
+    $current_views = get_post_meta( $post_id, SK_EPAPER_PREFIX . 'views', true );
+    $current_views = absint( $current_views ) + 1;
+    update_post_meta( $post_id, SK_EPAPER_PREFIX . 'views', $current_views );
+}
+
 // Get stored attachment IDs (prefixed variable)
-$sk_epaper_images = get_post_meta( get_the_ID(), SK_EPAPER_PREFIX . 'images', true );
+$sk_epaper_images = get_post_meta( $post_id, SK_EPAPER_PREFIX . 'images', true );
 if ( ! is_array( $sk_epaper_images ) ) {
     $sk_epaper_images = array_filter( explode( ',', $sk_epaper_images ) );
 }
+
+// Get Edition Date
+$sk_edition_date = get_post_meta( $post_id, SK_EPAPER_PREFIX . 'edition_date', true );
+if ( $sk_edition_date ) {
+    $sk_display_date = date_i18n( get_option( 'date_format' ), strtotime( $sk_edition_date ) );
+} else {
+    $sk_display_date = get_the_date();
+}
+
+// Get Stations / Editions Taxonomy terms
+$sk_stations = get_the_terms( $post_id, 'epaper_station' );
 ?>
 
 <div id="primary" class="content-area">
@@ -27,14 +47,18 @@ if ( ! is_array( $sk_epaper_images ) ) {
                         <div class="epaper-left">
                             <div class="date-box">
                                 <span class="current-date">
-                                    <?php single_post_title( 'ePaper: ' ); ?>
+                                    <?php echo esc_html( $sk_display_date ); ?> &mdash; <?php single_post_title(); ?>
+                                    <?php if ( ! empty( $sk_stations ) && ! is_wp_error( $sk_stations ) ) : ?>
+                                        <span class="epaper-station-badge">
+                                            (<?php echo esc_html( implode( ', ', wp_list_pluck( $sk_stations, 'name' ) ) ); ?>)
+                                        </span>
+                                    <?php endif; ?>
                                 </span>
                             </div>
                         </div>
                         <div class="epaper-center">
                             <div>
                                 <div>
-                                    <!-- Updated Dashicons -->
                                     <button id="zoom-in" class="zoom-btn sk-control-button" title="<?php echo esc_attr__( 'Zoom In', 'sk-epaper-manager' ); ?>">
                                         <span class="dashicons dashicons-plus"></span>
                                     </button>

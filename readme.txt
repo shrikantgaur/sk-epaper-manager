@@ -1,10 +1,10 @@
 === SK ePaper Manager ===
 Contributors: shrikantgaur
-Tags: epaper, pdf, newspaper, magazine, image gallery
+Tags: epaper, pdf, newspaper, magazine, image gallery, stations, shortcode
 Requires at least: 5.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.1.6
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,22 +14,30 @@ SK ePaper Manager makes it easy to publish digital newspapers or magazines on yo
 
 **SK ePaper Manager** lets you create and display digital ePapers by uploading multiple images or PDF files for each edition.
 
-Visitors can browse all ePapers in an archive view or open single editions to read page by page — with support for **zoom**, **print**, and **download** options.
+Visitors can browse all ePapers in an archive view or open single editions to read page by page — with support for **zoom**, **print**, **download**, and **shortcode embedding**.
 
-Perfect for news portals, schools, or local publications.
+Perfect for news portals, daily newspapers, schools, or local publications.
 
 == Features ==
 
 * Custom Post Type for ePapers
-* Upload multiple images **or** PDFs edition
+* Multi-Station / City Edition Taxonomies (`epaper_station`)
+* **Drag-and-Drop** page reordering in Admin
+* Dedicated Edition Date picker field
+* **Shortcodes**: `[sk_epaper id="123"]` and `[sk_epaper_archive]`
+* **View Counter & Admin Columns**: Track edition views and page count in WP Admin
+* Upload multiple images **or** PDFs per edition
 * Built-in archive page for all ePapers
 * Single page view for each edition
 * **Zoom in/out** for easier reading
 * **Print edition** directly from the browser
 * **Download** edition
 * Modern, responsive layout
-* Developer-friendly templates you can override
-* Lightweight and flexible
+
+== Shortcodes ==
+
+* `[sk_epaper id="123"]` - Embeds single ePaper reader inside any post or page.
+* `[sk_epaper_archive count="6" station="delhi"]` - Displays a grid of ePapers with optional station filtering.
 
 == Installation ==
 
@@ -37,36 +45,36 @@ Perfect for news portals, schools, or local publications.
 2. Activate **SK ePaper Manager** from the Plugins screen.
 3. Use the **ePapers** menu in your dashboard to create and manage ePaper editions.
 
-== Usage ==
-
-1. Go to **ePapers > Add New**.
-2. Enter a title (e.g. edition date or name).
-3. Upload your ePaper images or PDF files.
-4. Publish the edition.
-5. Visit your archive and single edition pages.
-
 == Frequently Asked Questions ==
 
 = Does this plugin support PDF files? =
 Yes — you can upload either multiple images or PDF files for each ePaper edition.
 
+= Can I embed an ePaper in Elementor or standard pages? =
+Yes — use the shortcode `[sk_epaper id="YOUR_POST_ID"]`.
+
 = Where are my ePapers displayed? =
 By default:
 * Archive: `/epapers/`
 * Single Edition: `/epapers/{edition-name}/`
-
-= Can I customize the design? =
-Yes — the plugin uses template files you can override in your theme for full control.
+* Stations: `/epaper-station/{station-slug}/`
 
 == Screenshots ==
 
 1. Admin: SK ePaper Manager plugin installed and activated.
-2. Admin: Add New ePaper – upload multiple images or a PDF file.
-3. Admin: Add/Edit ePaper – set title, featured image, and upload files.
-4. Frontend: Archive page showing all ePaper editions.
-5. Frontend: Single ePaper view with zoom, print, and download features.
+2. Admin: Add/Edit ePaper – drag and drop page reordering and edition date picker.
+3. Admin: Stations / Editions taxonomy management.
+4. Frontend: Single ePaper view with zoom, print, and download features.
+5. Frontend: Archive page showing all ePaper editions with station badges.
 
 == Changelog ==
+
+= 1.2.0 =
+* Added Drag-and-Drop page reordering in Admin metabox via jQuery UI Sortable.
+* Added "Stations / Editions" custom taxonomy (`epaper_station`) for multi-city/edition management.
+* Added custom Edition Date picker meta field.
+* Added shortcodes `[sk_epaper]` and `[sk_epaper_archive]` for page builder embedding.
+* Added View Counter (`_sk_epaper_views`) and custom columns in Admin post list table.
 
 = 1.1.6 =
 * Fixed PDF upload visibility in admin edit screen metabox.
@@ -99,23 +107,8 @@ Yes — the plugin uses template files you can override in your theme for full c
 * Prefixed global variables in templates
 * Other minor code improvements
 
-= 1.1.0 =
-* Added support for PDF uploads.
-* Added zoom in/out functionality for single edition view.
-* Added print button to print the current edition.
-* Added download button for downloading ePaper pages.
-* Improved CSS and layout responsiveness.
-
 = 1.0 =
 * Initial release — custom post type, image upload, archive and single templates.
-
-== Upgrade Notice ==
-
-= 1.1.1 =
-Fixes WordPress.org plugin check errors, escapes output, prefixes variables, and replaces external CDN with local Font Awesome.
-
-= 1.1.0 =
-Adds support for PDF uploads, zoom, print, and download buttons. Recommended update for better user experience.
 
 == License ==
 
