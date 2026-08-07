@@ -64,11 +64,9 @@ By default:
 1. Add New ePaper – Page upload, drag-and-drop sortable page order, and edition date selector.
 2. City / Editions Management – Taxonomy management for regional and city editions.
 3. Languages Management – Multi-language taxonomy configuration.
-4. Single ePaper Reader – Interactive reader slider with zoom, print, and download controls.
-5. ePapers Archive Grid – Responsive grid layout of published ePaper editions.
-6. ePaper Analytics & View Statistics – Real-time reader engagement metrics, top rankings, live search, and AJAX pagination.
-7. Shortcodes & Embed Documentation – Dynamic shortcode builder and integration guide for Gutenberg, Elementor, and PHP templates.
-8. Viewer Settings – Controls toggle and frontend primary color customization options.
+4. ePaper Analytics & View Statistics – Real-time reader engagement metrics, top rankings, live search, and AJAX pagination.
+5. Shortcodes & Embed Documentation – Dynamic shortcode builder and integration guide for Gutenberg, Elementor, and PHP templates.
+6. Viewer Settings – Controls toggle and frontend primary color customization options.
 
 == Changelog ==
 

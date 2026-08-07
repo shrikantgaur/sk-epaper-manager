@@ -27,25 +27,17 @@ Designed with modern aesthetics, fast AJAX reader engagement analytics, multi-ci
 
 ---
 
-## 📸 Screenshots Showcase (Frontend & Admin)
+## 📸 Admin Dashboard Screenshots
 
-### 🖥️ Frontend Views
-| 1. Single ePaper Reader (Zoom, Print, Download) | 2. ePapers Archive Grid View |
-| :---: | :---: |
-| ![Single ePaper Reader](assets/screenshots/screenshot-4.png) | ![ePapers Archive Grid](assets/screenshots/screenshot-5.png) |
-
----
-
-### ⚙️ Admin Dashboard Views
-| 3. Add New ePaper (Drag-and-Drop Order) | 4. City & Regional Editions Taxonomy |
+| 1. Add New ePaper (Drag-and-Drop Order) | 2. City & Regional Editions Taxonomy |
 | :---: | :---: |
 | ![Add New ePaper](assets/screenshots/screenshot-1.png) | ![City Editions](assets/screenshots/screenshot-2.png) |
 
-| 5. Languages Taxonomy | 6. AJAX Analytics & View Statistics |
+| 3. Languages Taxonomy | 4. AJAX Analytics & View Statistics |
 | :---: | :---: |
 | ![Languages](assets/screenshots/screenshot-3.png) | ![AJAX Analytics](assets/screenshots/screenshot-6.png) |
 
-| 7. Shortcodes & Embed Documentation | 8. Viewer Settings & Color Customization |
+| 5. Shortcodes & Embed Documentation | 6. Viewer Settings & Color Customization |
 | :---: | :---: |
 | ![Shortcodes Documentation](assets/screenshots/screenshot-7.png) | ![Viewer Settings](assets/screenshots/screenshot-8.png) |
 
