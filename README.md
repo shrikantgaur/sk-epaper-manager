@@ -27,19 +27,35 @@ Designed with modern aesthetics, fast AJAX reader engagement analytics, multi-ci
 
 ---
 
-## 📸 Admin Dashboard Screenshots
+## 📸 Screenshots Showcase (Original & New Features)
 
-| 1. Add New ePaper (Drag-and-Drop Order) | 2. City & Regional Editions Taxonomy |
+### 🖥️ Original Classic Screenshots
+| 1. Admin Installed & Active | 2. Add/Edit ePaper Drag & Drop Order |
 | :---: | :---: |
-| ![Add New ePaper](assets/screenshots/screenshot-1.png) | ![City Editions](assets/screenshots/screenshot-2.png) |
+| ![Admin Post List](assets/screenshots/screenshot-1.png) | ![Add Edit ePaper](assets/screenshots/screenshot-2.png) |
 
-| 3. Languages Taxonomy | 4. AJAX Analytics & View Statistics |
+| 3. Taxonomy Management | 4. Single ePaper Reader |
 | :---: | :---: |
-| ![Languages](assets/screenshots/screenshot-3.png) | ![AJAX Analytics](assets/screenshots/screenshot-6.png) |
+| ![Taxonomies](assets/screenshots/screenshot-3.png) | ![Single Reader](assets/screenshots/screenshot-4.png) |
 
-| 5. Shortcodes & Embed Documentation | 6. Viewer Settings & Color Customization |
+| 5. ePapers Archive Grid | |
 | :---: | :---: |
-| ![Shortcodes Documentation](assets/screenshots/screenshot-7.png) | ![Viewer Settings](assets/screenshots/screenshot-8.png) |
+| ![Archive Grid](assets/screenshots/screenshot-5.png) | |
+
+---
+
+### ⚙️ New Feature Screenshots (v1.2.0)
+| 6. Add New ePaper (Updated Upload & Date Picker) | 7. City & Regional Editions Taxonomy |
+| :---: | :---: |
+| ![Add New ePaper Updated](assets/screenshots/screenshot-6.png) | ![City Editions](assets/screenshots/screenshot-7.png) |
+
+| 8. Languages Taxonomy | 9. AJAX Analytics & View Statistics |
+| :---: | :---: |
+| ![Languages](assets/screenshots/screenshot-8.png) | ![AJAX Analytics](assets/screenshots/screenshot-9.png) |
+
+| 10. Shortcodes & Embed Documentation | 11. Viewer Settings & Color Customization |
+| :---: | :---: |
+| ![Shortcodes Documentation](assets/screenshots/screenshot-10.png) | ![Viewer Settings](assets/screenshots/screenshot-11.png) |
 
 ---
 

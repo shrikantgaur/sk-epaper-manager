@@ -61,12 +61,17 @@ By default:
 
 == Screenshots ==
 
-1. Add New ePaper – Page upload, drag-and-drop sortable page order, and edition date selector.
-2. City / Editions Management – Taxonomy management for regional and city editions.
-3. Languages Management – Multi-language taxonomy configuration.
-4. ePaper Analytics & View Statistics – Real-time reader engagement metrics, top rankings, live search, and AJAX pagination.
-5. Shortcodes & Embed Documentation – Dynamic shortcode builder and integration guide for Gutenberg, Elementor, and PHP templates.
-6. Viewer Settings – Controls toggle and frontend primary color customization options.
+1. Admin: SK ePaper Manager plugin installed and activated.
+2. Admin: Add/Edit ePaper – drag and drop page reordering and edition date picker.
+3. Admin: Editions / Languages taxonomy management.
+4. Frontend: Single ePaper view with zoom, print, and download features.
+5. Frontend: Archive page showing all ePaper editions with edition badges.
+6. Admin: Add New ePaper – Page upload, drag-and-drop sortable page order, and publication date selector.
+7. Admin: City / Regional Editions Taxonomy management.
+8. Admin: Multi-language Taxonomy configuration.
+9. Admin: ePaper Analytics & View Statistics – Real-time reader engagement metrics, top rankings, live search, and AJAX pagination.
+10. Admin: Shortcodes & Embed Documentation – Dynamic shortcode builder and integration guide for Gutenberg, Elementor, and PHP templates.
+11. Admin: Viewer Settings – Controls toggle and frontend primary color customization options.
 
 == Changelog ==
 
