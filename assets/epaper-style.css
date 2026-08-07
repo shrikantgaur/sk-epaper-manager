@@ -1,166 +1,537 @@
-/* FrontEnd CSS */
-.single-epaper .slider-container {
-  position: relative;
-  margin: 0 auto;
+/* ==========================================================================
+   SK ePaper Manager - Premium Frontend CSS (Default Brand Color: #000000)
+   ========================================================================== */
+
+.epaper-single-area {
+  padding: 0 20px !important;
+  box-sizing: border-box !important;
+}
+
+/* Single ePaper Viewer Container (Clean Layout with 10px Side Spacing) */
+.epaper-wrapper {
+  width: 100% !important;
+  margin: 0 auto !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #ffffff;
+  border-radius: 6px !important;
   overflow: hidden;
-  border: solid 1px #ccc;
-  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
 }
 
-.single-epaper .image-slider {
+.epaper-top-header .epaper-row {
+  background: #000000;
+  padding: 14px 25px;
+  color: #ffffff;
+}
+
+.epaper-top-header .epaper-col {
   display: flex;
-  transition: transform 0.5s ease-in-out;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
-.single-epaper .image-slide {
-  flex: 0 0 100%;
+.epaper-left .current-date {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
 }
 
-/* Apply modern CSS to images */
-.single-epaper .image-slide img {
+.epaper-controls-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Control Buttons with Explicit White Dashicons */
+.sk-control-button {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  color: #ffffff !important;
+  border-radius: 6px !important;
+  width: 36px !important;
+  height: 36px !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sk-control-button:hover {
+  background: #000000 !important;
+  border-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+.sk-control-button .dashicons {
+  font-size: 18px !important;
+  width: 18px !important;
+  height: 18px !important;
+  line-height: 18px !important;
+  color: #ffffff !important;
+  display: inline-block !important;
+  vertical-align: middle !important;
+}
+
+.epaper-right .page-count {
+  font-size: 13px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* Clean White Canvas Container */
+.epaper-content {
+  background: #ffffff;
   width: 100%;
-  height: auto;
-  border-radius: 5px; 
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Style the arrow buttons */
-.single-epaper .arrow {
-  position: fixed;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 30px;
-  cursor: pointer !important;
-  user-select: none;
-  z-index: 1;
-  background-color: hsla(
-    240,
-    7%,
-    62%,
-    1
-  ); 
-  color: #fff; 
-  border-radius: 50%; 
-  width: 40px;
-  height: 40px;
+.slider-container {
+  position: relative;
+  overflow: hidden;
+  background: #ffffff;
+  padding: 20px 0;
+  min-height: 650px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.image-slider {
+  display: flex;
+  width: 100%;
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform;
+}
+
+.image-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.single-epaper .arrow:hover {
-  background-color: hsl(0deg 0% 3.2%);
-}
 
-.single-epaper .left-arrow {
-  left: 10px;
-}
-
-.single-epaper .right-arrow {
-  right: 10px;
-}
-
-/* epaper top header */
-.epaper-top-header .epaper-row {
-    background: #000;
-    color: #fff;
-    padding: 10px;
-    border-radius: 10px;  
-}
-.epaper-top-header .epaper-col {
-    display: flex;
-	flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-}
-
-/* Epaper listing page  */
-/* Styles for the epaper-listing section */
-.epaper-listing {
-    display: flex;
-    flex-wrap: wrap;
-   /* justify-content: space-between;*/
-	gap: 20px;
-}
-
-/* Styles for each epaper-item */
-.epaper-item {
-    width: 31%;
-    border: 1px solid #e0e0e0;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-}
-
-/* Styles for epaper-thumbnail */
-.epaper-thumbnail {
-    width: 100%;
-}
-
-.epaper-thumbnail img {
-    max-width: 100%;
-    height: auto;
-}
-
-/* Styles for epaper-content */
-.epaper-content, .epaper-top-header {
-    padding: 10px;
-}
-
-/* Styles for the title */
-.epaper-content h2 {
-    font-size: 24px;
-    margin: 5px 0 0 0;
-	text-align: center;
-}
-.epaper-content a {
-    text-decoration: none;
-	font-size: medium;
-}
-
+/* Zoom Container & Image */
 .zoom-container {
-  overflow: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease;
+  transform-origin: center center;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.zoom-container img {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  max-height: 85vh !important;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+/* PDF Embed Rule */
+.zoom-container iframe,
+.epaper-pdf-embed {
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+  height: 800px !important;
+  min-height: 800px !important;
+  border: none !important;
+  border-radius: 6px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  background: #ffffff;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.65);
+  color: #ffffff;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.arrow:hover {
+  background: #000000;
+  border-color: #000000;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.arrow.left-arrow {
+  left: 20px;
+}
+
+.arrow.right-arrow {
+  right: 20px;
+}
+
+.arrow .dashicons {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   ePaper Archive Grid & Hero Header UI (Default Color: #000000)
+   ========================================================================== */
+
+.epaper-archive-wrapper {
+  padding: 30px 20px;
+  max-width: 1240px;
+  margin: 0 auto;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.epaper-archive-hero-header {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border: 1px solid #cbd5e1;
+  border-radius: 16px;
+  padding: 28px 32px;
+  margin-bottom: 35px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.hero-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.epaper-archive-hero-header h1.page-title {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 800;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.epaper-archive-hero-header h1.page-title .dashicons {
+  font-size: 30px;
+  width: 30px;
+  height: 30px;
+  color: #000000;
+}
+
+.epaper-count-badge {
+  background: #000000;
+  color: #ffffff;
+  border: 1px solid #000000;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.epaper-count-badge .dashicons {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  color: #ffffff;
+}
+
+/* 3-Column Responsive Grid */
+.epaper-grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 30px;
+}
+
+.epaper-card-item {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.epaper-card-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+  border-color: #000000;
+}
+
+.epaper-card-thumb-wrap {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  background: #f8fafc;
+  overflow: hidden;
+}
+
+.epaper-thumb-link {
+  display: block;
   width: 100%;
   height: 100%;
 }
 
-.zoom-container img {
-  display: block;
-  margin: 0 auto;
-  max-width: 100%;
-  transition: transform 0.3s ease;
+.epaper-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover !important;
+  object-position: top center !important;
+  transition: transform 0.5s ease !important;
 }
 
-.dragging {
-  cursor: grabbing !important;
+.epaper-card-item:hover .epaper-card-img {
+  transform: scale(1.06);
 }
 
-/* Zoom & Download Button Group Styling */
-.epaper-center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 0;
+.epaper-placeholder-card {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1f5f9;
+  color: #94a3b8;
 }
 
-.epaper-center .sk-control-button {
-    background-color: #fff;
-    border: none;
-    color: #000;
-    padding: 7px 8px;
-    margin: 0 5px;
-    font-size: 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+.epaper-placeholder-card .dashicons {
+  font-size: 54px;
+  width: 54px;
+  height: 54px;
 }
 
-.epaper-center .sk-control-button i {
-    font-size: 18px;
-    pointer-events: none;
+.epaper-card-page-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(15, 23, 42, 0.85);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 14px;
+  z-index: 3;
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
-.epaper-center .sk-control-button:hover {
-    opacity: 0.8
+.epaper-card-page-badge .dashicons {
+  font-size: 14px;
+  width: 14px;
+  height: 14px;
+}
+
+.epaper-card-hover-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 4;
+}
+
+.epaper-card-item:hover .epaper-card-hover-overlay {
+  opacity: 1;
+}
+
+.epaper-hover-read-btn {
+  background: #000000;
+  color: #ffffff !important;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 10px 20px;
+  border-radius: 20px;
+  text-decoration: none !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transform: translateY(10px);
+  transition: transform 0.3s ease, background 0.2s;
+}
+
+.epaper-card-item:hover .epaper-hover-read-btn {
+  transform: translateY(0);
+}
+
+.epaper-card-body {
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.epaper-card-date {
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 8px;
+}
+
+.epaper-card-date .dashicons {
+  font-size: 14px;
+  width: 14px;
+  height: 14px;
+  color: #000000;
+}
+
+.epaper-card-title {
+  margin: 0 0 12px 0;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.epaper-card-title a {
+  color: #0f172a !important;
+  text-decoration: none !important;
+  transition: color 0.2s;
+}
+
+.epaper-card-title a:hover {
+  color: #000000 !important;
+}
+
+.epaper-card-tax-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.epaper-tax-pill {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pill-edition {
+  background: #f1f5f9;
+  color: #0f172a;
+  border: 1px solid #cbd5e1;
+}
+
+.pill-language {
+  background: #d1fae5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+}
+
+/* Premium Read Now CTA Button */
+.epaper-card-cta-btn {
+  background: #0f172a;
+  color: #ffffff !important;
+  border: 1px solid #0f172a;
+  border-radius: 10px;
+  padding: 11px 18px;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.3px;
+  text-decoration: none !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.18);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.epaper-card-cta-btn .dashicons {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.epaper-card-cta-btn:hover,
+.epaper-card-item:hover .epaper-card-cta-btn {
+  background: #000000;
+  color: #ffffff !important;
+  border-color: #000000;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+.epaper-card-cta-btn:hover .dashicons,
+.epaper-card-item:hover .epaper-card-cta-btn .dashicons {
+  transform: translateX(5px);
+}
+
+.epaper-no-results {
+  text-align: center;
+  padding: 50px 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  grid-column: 1 / -1;
+}
+
+.epaper-no-results .dashicons {
+  font-size: 42px;
+  width: 42px;
+  height: 42px;
+  color: #94a3b8;
+}
+
+@media (max-width: 768px) {
+  .epaper-grid-container {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+  }
+
+  .epaper-archive-hero-header {
+    padding: 20px;
+  }
+
+  .arrow {
+    width: 36px;
+    height: 36px;
+  }
+
+  .arrow.left-arrow {
+    left: 8px;
+  }
+
+  .arrow.right-arrow {
+    right: 8px;
+  }
 }
