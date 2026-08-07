@@ -62,10 +62,10 @@ By default:
 == Screenshots ==
 
 1. Admin: SK ePaper Manager plugin installed and activated.
-2. Admin: Add/Edit ePaper – drag and drop page reordering and edition date picker.
-3. Admin: Editions / Languages taxonomy management.
-4. Frontend: Single ePaper view with zoom, print, and download features.
-5. Frontend: Archive page showing all ePaper editions with edition badges.
+2. Admin: Add/Edit ePaper.
+3. Admin: Edit page and add ePapers.
+4. Frontend: Listing ePaper.
+5. Frontend: Single page.
 6. Admin: Add New ePaper – Page upload, drag-and-drop sortable page order, and publication date selector.
 7. Admin: City / Regional Editions Taxonomy management.
 8. Admin: Multi-language Taxonomy configuration.

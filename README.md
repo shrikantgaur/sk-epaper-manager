@@ -30,17 +30,17 @@ Designed with modern aesthetics, fast AJAX reader engagement analytics, multi-ci
 ## 📸 Screenshots Showcase (Original & New Features)
 
 ### 🖥️ Original Classic Screenshots
-| 1. Admin Installed & Active | 2. Add/Edit ePaper Drag & Drop Order |
+| 1. Admin Installed & Active | 2. Add/Edit ePaper |
 | :---: | :---: |
 | ![Admin Post List](assets/screenshots/screenshot-1.png) | ![Add Edit ePaper](assets/screenshots/screenshot-2.png) |
 
-| 3. Taxonomy Management | 4. Single ePaper Reader |
+| 3. Edit page and add ePapers | 4. Listing ePaper |
 | :---: | :---: |
-| ![Taxonomies](assets/screenshots/screenshot-3.png) | ![Single Reader](assets/screenshots/screenshot-4.png) |
+| ![Edit page and add ePapers](assets/screenshots/screenshot-3.png) | ![Listing ePaper](assets/screenshots/screenshot-4.png) |
 
-| 5. ePapers Archive Grid | |
+| 5. Single page | |
 | :---: | :---: |
-| ![Archive Grid](assets/screenshots/screenshot-5.png) | |
+| ![Single page](assets/screenshots/screenshot-5.png) | |
 
 ---
 
