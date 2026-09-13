@@ -22,19 +22,30 @@ Perfect for news portals, daily newspapers, schools, or local publications.
 
 == Features ==
 
-* Custom Post Type for ePapers
-* Multi-Edition & Language Taxonomies
-* **Drag-and-Drop** page reordering in Admin
-* Dedicated Edition Date picker field
-* **Shortcodes**: `[sk_epaper id="123"]` and `[sk_epaper_archive]`
-* **View Counter & Admin Columns**: Track edition views and page count in WP Admin
-* Upload multiple images **or** PDFs per edition
-* Built-in archive page for all ePapers
-* Single page view for each edition
-* **Zoom in/out** for easier reading
-* **Print edition** directly from the browser
-* **Download** edition
-* Modern, responsive layout
+**For your readers**
+
+* Page reader with zoom, print (one page or all), download, keyboard arrows and touch swipe
+* Thumbnail page rail, below the reader or as a side rail, with optional section names
+* Pages load as the reader moves through them, so a long edition opens quickly
+* Archive filters: search, Edition, Language, month and exact edition date
+* A "More Editions" row under every edition
+* Accessible controls, live page counter and reduced-motion support
+
+**For you**
+
+* Custom post type for editions, with Editions (city or regional) and Languages taxonomies
+* Drag-and-drop page ordering, a publication date, and a name for each page
+* Upload images or PDFs, mixed in the same edition
+* Analytics with reader engagement, top editions and an edition date range
+* Getting Started screen with a guide and one-click sample content
+* Blocks and shortcodes: `[sk_epaper id="123"]` and `[sk_epaper_archive]`
+* Brand colour, content width and reader controls, all configurable
+
+**Built to last**
+
+* View counting keeps working behind full page caching
+* Templates can be overridden from your theme
+* Uninstall removes nothing unless you ask it to
 
 == Shortcodes ==
 
@@ -49,17 +60,77 @@ Perfect for news portals, daily newspapers, schools, or local publications.
 
 == Frequently Asked Questions ==
 
-= Does this plugin support PDF files? =
-Yes — you can upload either multiple images or PDF files for each ePaper edition.
+= Can I try it before installing? =
 
-= Can I embed an ePaper in Elementor or standard pages? =
-Yes — use the shortcode `[sk_epaper id="YOUR_POST_ID"]`.
+Yes. Use the *Live Preview* button on this page: it opens a temporary WordPress site with sample editions already loaded, and disappears when you close the tab.
+
+Once installed, **ePapers > Getting Started** can create the same sample editions on your own site, and remove them again in one click.
+
+= Does it support PDF files? =
+
+Yes. Upload images, PDFs, or a mix of both in one edition.
+
+Under **Settings > PDF Rendering** you can choose how PDFs are shown:
+
+* **Browser embed** - the browser's own PDF viewer.
+* **Page images** (recommended) - WordPress generates a page image for each PDF, so zoom, printing, swiping and lazy loading behave exactly like an image edition.
+
+Page images need Imagick with Ghostscript on the server. Most hosts have both. If yours does not, the browser embed still works.
+
+= How are view counts calculated? =
+
+A view is counted when a reader opens an edition, not when it appears in the archive list.
+
+* The same reader opening the same edition again within 24 hours counts once, so refreshing does not inflate the number.
+* Known search engine crawlers and bots are ignored.
+* Counting happens through a small background request, so it keeps working on sites with full page caching.
+* Counts are per edition, not per page. Turning pages inside an edition adds nothing.
+
+= My view counts dropped after updating. Why? =
+
+They are more accurate now. Before 2.0.0 every page load counted, including bots, crawlers and the same reader refreshing. Your historical totals are untouched, but the numbers grow more slowly from here.
+
+= Does turning off the Download button stop people downloading pages? =
+
+No. That setting hides the toolbar button, but the uploaded images and PDFs still live in your normal WordPress uploads folder and stay reachable at their direct URLs.
+
+Genuinely restricting access needs protected file delivery, which is planned for a future release. If you need it today, put access rules on your uploads directory at the web server level.
 
 = Where are my ePapers displayed? =
-By default:
+
 * Archive: `/epapers/`
-* Single Edition: `/epapers/{edition-name}/`
-* Editions: `/epaper-edition/{edition-slug}/`
+* Single edition: `/epapers/{edition-name}/`
+* By city or region: `/epaper-edition/{edition-slug}/`
+* By language: `/epaper-language/{language-slug}/`
+
+= Can I embed an edition in Elementor, Divi or a normal page? =
+
+Yes. Use `[sk_epaper id="123"]` for the reader or `[sk_epaper_archive count="6"]` for a grid. In the block editor, search for **ePaper** to insert the same thing as a block.
+
+= Can I change the layout? =
+
+Copy a template into your theme and the plugin will use yours instead:
+
+* `yourtheme/sk-epaper/single-epaper.php`
+* `yourtheme/sk-epaper/archive-epaper.php`
+
+Editing the plugin's own files works too, but those changes are lost on the next update.
+
+= The reader does not line up with the rest of my theme. =
+
+Set **Settings > Content Width** to your theme's content width, or to 0 to remove the limit and let your theme's own container decide.
+
+= Will it slow my site down? =
+
+The plugin's CSS and JavaScript load only on pages that actually show an ePaper. Inside an edition, pages load as the reader reaches them rather than all at once, and archives are paginated.
+
+= What happens to my editions if I delete the plugin? =
+
+Nothing is removed unless you opt in first, under **Settings > On Uninstall**. Even then, only plugin settings and stored ePaper data are deleted - your ePaper posts and uploaded media are always left alone.
+
+= I am upgrading from 1.x. Will anything break? =
+
+No. Editions, settings, permalinks and shortcodes are unchanged and upgrade automatically. Two things change visibly: view counts grow more slowly because bots and repeat visits no longer count, and the archive is paginated at 24 editions per page, which you can change in Settings.
 
 == Screenshots ==
 
