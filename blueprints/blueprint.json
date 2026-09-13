@@ -1,0 +1,44 @@
+{
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"meta": {
+		"title": "SK ePaper Manager",
+		"description": "Try the ePaper reader, archive filters and admin screens with sample editions already loaded.",
+		"author": "shrikantgaur",
+		"categories": [ "Media", "Publishing" ]
+	},
+	"landingPage": "/epapers/",
+	"preferredVersions": {
+		"php": "8.2",
+		"wp": "latest"
+	},
+	"phpExtensionBundles": [ "kitchen-sink" ],
+	"features": {
+		"networking": true
+	},
+	"steps": [
+		{
+			"step": "login",
+			"username": "admin",
+			"password": "password"
+		},
+		{
+			"step": "setSiteOptions",
+			"options": {
+				"blogname": "SK Daily News",
+				"blogdescription": "A demo ePaper site",
+				"sk_epaper_pdf_mode": "image",
+				"sk_epaper_show_thumbnails": "1",
+				"sk_epaper_thumb_position": "bottom",
+				"sk_epaper_show_related": "1",
+				"sk_epaper_related_count": "3",
+				"sk_epaper_archive_per_page": "12",
+				"sk_epaper_header_bg": "#1e293b",
+				"sk_epaper_primary_color": "#c2410c"
+			}
+		},
+		{
+			"step": "runPHP",
+			"code": "<?php require_once '/wordpress/wp-load.php'; require_once ABSPATH . 'wp-admin/includes/image.php'; if ( class_exists( 'SK_EPaper_Demo' ) ) { SK_EPaper_Demo::import(); } flush_rewrite_rules();"
+		}
+	]
+}
