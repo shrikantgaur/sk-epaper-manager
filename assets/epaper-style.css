@@ -2,9 +2,38 @@
    SK ePaper Manager - Premium Frontend CSS (Default Brand Color: #000000)
    ========================================================================== */
 
+/* The reader and the listing share one frame so their edges line up. The width
+   comes from a custom property the plugin sets from its settings, because a
+   fixed value would fight whatever container the active theme provides. */
+.epaper-single-area,
+.epaper-archive-wrapper {
+  max-width: var(--sk-epaper-max-width, 1240px);
+  margin-left: auto;
+  margin-right: auto;
+  padding: 30px 20px;
+  box-sizing: border-box;
+}
+
+/* The toolbar is sticky, so a gap above it only pushed the reader down and
+   left a white band inside the reader's own frame. Themes add that space in
+   several places - the content area, the <main> wrapper, or as a margin on the
+   first child - so all three are cleared. */
 .epaper-single-area {
-  padding: 0 20px !important;
-  box-sizing: border-box !important;
+  padding-top: 0;
+}
+
+.epaper-single-area > main,
+.epaper-single-area > .site-main {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.epaper-wrapper > *:first-child {
+  margin-top: 0;
+}
+
+.epaper-top-header {
+  margin: 0;
 }
 
 /* Single ePaper Viewer Container (Clean Layout with 10px Side Spacing) */
@@ -18,10 +47,23 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
 }
 
+/* The toolbar follows the reader down the page: on a full newspaper page the
+   zoom, print and page controls were scrolled far out of reach. */
+.epaper-top-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.admin-bar .epaper-top-header {
+  top: 32px;
+}
+
 .epaper-top-header .epaper-row {
   background: #000000;
-  padding: 14px 25px;
+  padding: 10px 18px;
   color: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
 }
 
 .epaper-top-header .epaper-col {
@@ -33,25 +75,33 @@
 }
 
 .epaper-left .current-date {
+  display: block;
+  max-width: 34ch;
+  overflow: hidden;
   font-size: 14px;
   font-weight: 700;
   color: #ffffff;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .epaper-controls-group {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
 }
 
 /* Control Buttons with Explicit White Dashicons */
 .sk-control-button {
-  background: rgba(255, 255, 255, 0.15) !important;
-  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  background: transparent !important;
+  border: 0 !important;
   color: #ffffff !important;
-  border-radius: 6px !important;
-  width: 36px !important;
-  height: 36px !important;
+  border-radius: 7px !important;
+  width: 34px !important;
+  height: 34px !important;
   padding: 0 !important;
   display: inline-flex !important;
   align-items: center !important;
@@ -61,9 +111,58 @@
 }
 
 .sk-control-button:hover {
-  background: #000000 !important;
-  border-color: #000000 !important;
+  /* Translucent white, not black: the toolbar itself is dark, so a black hover
+     made the button vanish under the cursor. */
+  background: rgba(255, 255, 255, 0.22) !important;
+  border-color: transparent !important;
   color: #ffffff !important;
+}
+
+.sk-control-button:active {
+  transform: scale(0.94);
+}
+
+/* Page counter reads as a status chip rather than loose text. */
+.epaper-right .page-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.epaper-right .current-page {
+  font-weight: 800;
+}
+
+@media (max-width: 600px) {
+  .epaper-top-header .epaper-row {
+    padding: 8px 12px;
+  }
+
+  .epaper-top-header .epaper-col {
+    gap: 8px;
+  }
+
+  .epaper-left .current-date {
+    max-width: 18ch;
+    font-size: 13px;
+  }
+
+  .epaper-right .page-count {
+    padding: 4px 10px;
+    font-size: 12px;
+  }
+
+  .sk-control-button {
+    width: 32px !important;
+    height: 32px !important;
+  }
 }
 
 .sk-control-button .dashicons {
@@ -128,10 +227,12 @@
 }
 
 .zoom-container img {
+  /* Fill the reader width and let the page run tall, the same way the PDF
+     embed does. A max-height cap letterboxed portrait pages into a narrow
+     strip with wide empty margins either side. */
   width: 100% !important;
   max-width: 100% !important;
   height: auto !important;
-  max-height: 85vh !important;
   object-fit: contain;
   border-radius: 4px;
 }
@@ -139,10 +240,13 @@
 /* PDF Embed Rule */
 .zoom-container iframe,
 .epaper-pdf-embed {
+  /* Height follows the page shape (A4 portrait) instead of a flat 800px, so a
+     PDF page is the same size as an image page in the same reader. */
   width: 100% !important;
   min-width: 100% !important;
   max-width: 100% !important;
-  height: 800px !important;
+  aspect-ratio: 1 / 1.414;
+  height: auto !important;
   min-height: 800px !important;
   border: none !important;
   border-radius: 6px;
@@ -196,9 +300,6 @@
    ========================================================================== */
 
 .epaper-archive-wrapper {
-  padding: 30px 20px;
-  max-width: 1240px;
-  margin: 0 auto;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
@@ -265,6 +366,7 @@
 }
 
 .epaper-card-item {
+  position: relative;
   background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 14px;
@@ -282,11 +384,14 @@
   border-color: #000000;
 }
 
+/* A4 portrait so an entire newspaper page fits without being cropped. A fixed
+   240px box sliced the bottom off every page. */
 .epaper-card-thumb-wrap {
   position: relative;
   width: 100%;
-  height: 240px;
-  background: #f8fafc;
+  aspect-ratio: 1 / 1.414;
+  height: auto;
+  background: #f1f5f9;
   overflow: hidden;
 }
 
@@ -299,8 +404,8 @@
 .epaper-card-img {
   width: 100%;
   height: 100%;
-  object-fit: cover !important;
-  object-position: top center !important;
+  object-fit: contain !important;
+  object-position: center !important;
   transition: transform 0.5s ease !important;
 }
 
@@ -386,22 +491,59 @@
   transform: translateY(0);
 }
 
+/* Stretched over the entire card, above the artwork but below nothing else -
+   there is only one link now, so there is nothing to compete with. */
+.epaper-card-overlay-link {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  display: block;
+  border-radius: inherit;
+  /* An empty anchor gets no cursor from some themes' resets, and the layers it
+     sits over must not swallow the hover. */
+  cursor: pointer;
+  text-decoration: none !important;
+}
+
+/* Purely decorative - never intercept the pointer. */
+.epaper-card-hover-overlay,
+.epaper-card-page-badge,
+.epaper-card-img,
+.epaper-placeholder-card {
+  pointer-events: none;
+}
+
+.epaper-card-overlay-link:focus-visible {
+  outline: 3px solid #2563eb;
+  outline-offset: 3px;
+}
+
 .epaper-card-body {
-  padding: 20px 22px;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   flex: 1;
+  flex-direction: column;
+  padding: 16px 18px 14px;
+}
+
+/* Date and the taxonomy pills share one line above the title. They used to sit
+   in a separate footer below it, which added a third row to every card. */
+.epaper-card-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
 }
 
 .epaper-card-date {
-  font-size: 12px;
-  font-weight: 600;
-  color: #64748b;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 5px;
-  margin-bottom: 8px;
+  margin: 0;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 .epaper-card-date .dashicons {
@@ -412,10 +554,20 @@
 }
 
 .epaper-card-title {
-  margin: 0 0 12px 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: 0;
+  color: #0f172a;
   font-size: 17px;
   font-weight: 700;
-  line-height: 1.4;
+  line-height: 1.35;
+  transition: color 0.2s ease;
+}
+
+.epaper-card-item:hover .epaper-card-title {
+  color: #000000;
 }
 
 .epaper-card-title a {
@@ -429,57 +581,103 @@
 }
 
 .epaper-card-tax-meta {
-  display: flex;
+  display: inline-flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 18px;
+  gap: 6px;
+  min-width: 0;
+  margin: 0;
 }
 
+/* Compact badges. They sit inline with the date now, so a full sized pill made
+   that row look like a second toolbar. */
 .epaper-tax-pill {
-  font-size: 11px;
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 6px;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
+  max-width: 14ch;
+  padding: 2px 8px;
+  overflow: hidden;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Above .epaper-card-overlay-link (z-index 6) so a click on a badge filters
+   instead of opening the edition. Themes underline links through :where()
+   selectors that are easy to miss, so every state is spelled out. */
+a.epaper-tax-pill,
+a.epaper-tax-pill:link,
+a.epaper-tax-pill:visited,
+a.epaper-tax-pill:hover,
+a.epaper-tax-pill:focus,
+a.epaper-tax-pill:active {
+  position: relative;
+  z-index: 7;
+  text-decoration: none !important;
+  text-decoration-line: none !important;
+  box-shadow: none !important;
+  transition: border-color 0.18s ease, filter 0.18s ease;
+}
+
+a.epaper-tax-pill:hover {
+  border-color: #94a3b8;
+  filter: brightness(0.97);
+}
+
+a.epaper-tax-pill:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+.epaper-tax-pill .dashicons {
+  flex: 0 0 auto;
+  width: 12px;
+  height: 12px;
+  font-size: 12px;
+  line-height: 12px;
 }
 
 .pill-edition {
-  background: #f1f5f9;
-  color: #0f172a;
-  border: 1px solid #cbd5e1;
+  background: #eef2f7;
+  color: #334155;
+  border: 1px solid #dbe3ec;
 }
 
 .pill-language {
-  background: #d1fae5;
+  background: #ecfdf5;
   color: #047857;
-  border: 1px solid #a7f3d0;
+  border: 1px solid #bbf7d0;
 }
 
 /* Premium Read Now CTA Button */
+/* The old full width button repeated a link the whole card already is. It is
+   now a compact affordance sitting at the end of the meta row. */
 .epaper-card-cta-btn {
-  background: #0f172a;
-  color: #ffffff !important;
-  border: 1px solid #0f172a;
-  border-radius: 10px;
-  padding: 11px 18px;
-  font-weight: 700;
-  font-size: 13px;
-  letter-spacing: 0.3px;
-  text-decoration: none !important;
-  display: flex;
+  flex: 0 0 auto;
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.18);
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid #e2e8f0;
+  border-radius: 50%;
+  background: #f8fafc;
+  color: #0f172a !important;
+  box-shadow: none;
+  text-decoration: none !important;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .epaper-card-cta-btn .dashicons {
-  font-size: 18px;
-  width: 18px;
-  height: 18px;
-  line-height: 18px;
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
   transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -518,6 +716,10 @@
     gap: 20px;
   }
 
+  .epaper-archive-wrapper {
+    padding: 16px 12px;
+  }
+
   .epaper-archive-hero-header {
     padding: 20px;
   }
@@ -534,4 +736,1024 @@
   .arrow.right-arrow {
     right: 8px;
   }
+}
+
+/* ------------------------------------------------------------------
+   Archive Pagination (added in 1.2.1)
+------------------------------------------------------------------ */
+.epaper-archive-pagination {
+    margin: 32px auto 48px;
+    max-width: 1200px;
+    padding: 0 16px;
+}
+
+.epaper-archive-pagination .nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+}
+
+.epaper-archive-pagination .page-numbers {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 46px;
+    height: 46px;
+    padding: 0 16px;
+    font-size: 16px;
+    justify-content: center;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #1e293b;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.epaper-archive-pagination .page-numbers:hover,
+.epaper-archive-pagination .page-numbers.current {
+    background: #000000;
+    border-color: #000000;
+    color: #ffffff;
+}
+
+.epaper-archive-pagination .page-numbers.dots:hover {
+    background: #ffffff;
+    color: #1e293b;
+    border-color: #e2e8f0;
+}
+
+.epaper-archive-pagination .dashicons {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+}
+
+@media (max-width: 480px) {
+    .epaper-archive-pagination .page-numbers {
+        min-width: 34px;
+        height: 34px;
+        padding: 0 8px;
+        font-size: 13px;
+    }
+}
+
+/* ------------------------------------------------------------------
+   Lazy loading placeholder (added in 1.3.0)
+------------------------------------------------------------------ */
+.epaper-page-skeleton {
+    display: block;
+    width: 100%;
+    min-height: 60vh;
+    border-radius: 6px;
+    background: linear-gradient(100deg, #eef2f7 30%, #f8fafc 50%, #eef2f7 70%);
+    background-size: 200% 100%;
+    animation: sk-epaper-shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes sk-epaper-shimmer {
+    0%   { background-position: 150% 0; }
+    100% { background-position: -50% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .epaper-page-skeleton {
+        animation: none;
+    }
+}
+
+.image-slide img[data-src] {
+    min-height: 60vh;
+}
+
+/* ------------------------------------------------------------------
+   Page thumbnail rail (added in 1.3.0)
+------------------------------------------------------------------ */
+
+/* Layout: the rail sits below, left of, or right of the reader. */
+.epaper-body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.epaper-body.epaper-thumbs-left,
+.epaper-body.epaper-thumbs-right {
+    flex-direction: row;
+    align-items: stretch;
+}
+
+.epaper-body.epaper-thumbs-left {
+    flex-direction: row-reverse;
+}
+
+.epaper-body > .epaper-content {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.epaper-thumb-strip {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    padding: 14px 10px;
+    background: #37475a;
+    border-radius: 4px;
+}
+
+.epaper-thumbs-left > .epaper-thumb-strip,
+.epaper-thumbs-right > .epaper-thumb-strip {
+    flex: 0 0 auto;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* Stretch to the height of the page next to it rather than shrink-wrapping
+       the thumbnails, so the rail and the reader line up top and bottom. */
+    align-self: stretch;
+    width: 178px;
+    padding: 18px 12px;
+    /* Square top edge so the rail meets the top of the reader flush. */
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.epaper-thumb-viewport {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 2px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.35) transparent;
+}
+
+.epaper-thumbs-left .epaper-thumb-viewport,
+.epaper-thumbs-right .epaper-thumb-viewport {
+    width: 100%;
+    /* Take the leftover height inside the stretched rail; min-height:0 is what
+       lets a flex child actually scroll instead of growing past its parent. */
+    flex: 1 1 auto;
+    min-height: 0;
+    max-height: none;
+    padding-top: 2px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.epaper-thumb-viewport::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.epaper-thumb-viewport::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+/* --- Hard reset -------------------------------------------------
+   Themes routinely style `ul li` and `button` with their own
+   backgrounds, pills, and ::before markers. Those leaked through as
+   orange ovals and stray check marks, so everything is reset here
+   before the rail is styled.
+------------------------------------------------------------------ */
+.epaper-thumb-list,
+.epaper-thumb-item,
+.epaper-thumb-btn,
+.epaper-thumb-frame,
+.epaper-thumb-nav {
+    box-sizing: border-box;
+}
+
+.epaper-thumb-list::before,
+.epaper-thumb-list::after,
+.epaper-thumb-item::before,
+.epaper-thumb-item::after,
+.epaper-thumb-item::marker,
+.epaper-thumb-btn::before,
+.epaper-thumb-btn::after,
+.epaper-thumb-frame::before,
+.epaper-thumb-frame::after {
+    content: none !important;
+    display: none !important;
+    background: none !important;
+}
+
+.epaper-thumb-list {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 0;
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+    background: none !important;
+}
+
+.epaper-thumbs-left .epaper-thumb-list,
+.epaper-thumbs-right .epaper-thumb-list {
+    flex-direction: column;
+}
+
+.epaper-thumb-item {
+    position: relative;
+    flex: 0 0 auto;
+    margin: 0 !important;
+    padding: 0 10px !important;
+    list-style: none !important;
+    background: none !important;
+    border: 0;
+    border-radius: 0;
+}
+
+.epaper-thumb-item + .epaper-thumb-item {
+    border-left: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.epaper-thumbs-left .epaper-thumb-item,
+.epaper-thumbs-right .epaper-thumb-item {
+    padding: 6px 0 !important;
+}
+
+.epaper-thumbs-left .epaper-thumb-item + .epaper-thumb-item,
+.epaper-thumbs-right .epaper-thumb-item + .epaper-thumb-item {
+    border-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.epaper-thumb-btn,
+.epaper-thumb-btn:link,
+.epaper-thumb-btn:visited,
+.epaper-thumb-btn:hover,
+.epaper-thumb-btn:focus,
+.epaper-thumb-btn:active {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    width: 116px;
+    min-width: 0;
+    min-height: 0;
+    height: auto;
+    margin: 0 !important;
+    padding: 6px !important;
+    border: 0 !important;
+    border-radius: 4px !important;
+    background: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    color: #ffffff !important;
+    font: inherit;
+    text-align: center;
+    text-transform: none;
+    text-decoration: none;
+    letter-spacing: normal;
+    line-height: 1.3;
+    cursor: pointer;
+    outline-offset: 2px;
+    transition: background 0.18s ease;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.epaper-thumbs-left .epaper-thumb-btn,
+.epaper-thumbs-right .epaper-thumb-btn {
+    width: 100%;
+}
+
+/* The active page is marked by its frame alone. A filled box behind the preview
+   read as a second, competing highlight. */
+.epaper-thumb-btn.is-active {
+    background: transparent !important;
+}
+
+.epaper-thumb-frame {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 3px;
+    background: #ffffff;
+    border: 2px solid transparent;
+    border-radius: 2px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.28);
+    line-height: 0;
+    transition: border-color 0.18s ease, transform 0.18s ease;
+}
+
+/* Only real pointers get the lift. On touch screens :hover sticks after a tap,
+   and the raised frame was clipped by the rail's scroll edge. */
+@media (hover: hover) and (pointer: fine) {
+    .epaper-thumb-btn:hover .epaper-thumb-frame {
+        transform: translateY(-2px);
+    }
+
+    .epaper-thumb-btn:hover {
+        background: transparent !important;
+    }
+}
+
+.epaper-thumb-btn.is-active .epaper-thumb-frame {
+    border-color: #e11d48;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+.epaper-thumb-frame img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: 128px;
+    object-fit: cover;
+    object-position: top center;
+    border-radius: 0;
+}
+
+/* A vertical rail has the room to show the entire page, so no cropping and a
+   taller preview - cropped 128px strips made the pages unreadable. */
+.epaper-thumbs-left .epaper-thumb-frame img,
+.epaper-thumbs-right .epaper-thumb-frame img {
+    height: auto;
+    max-height: 240px;
+    object-fit: contain;
+}
+
+.epaper-thumbs-left .epaper-thumb-fallback,
+.epaper-thumbs-right .epaper-thumb-fallback {
+    height: 190px;
+}
+
+.epaper-thumb-fallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 128px;
+    background: #f1f5f9;
+    color: #94a3b8;
+}
+
+.epaper-thumb-fallback .dashicons {
+    width: 30px;
+    height: 30px;
+    font-size: 30px;
+}
+
+/* Page number badge, corner of the preview. */
+.epaper-thumb-num {
+    position: absolute;
+    right: 4px;
+    bottom: 4px;
+    min-width: 20px;
+    padding: 1px 5px;
+    border-radius: 3px;
+    background: rgba(15, 23, 42, 0.78);
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.5;
+    text-align: center;
+}
+
+.epaper-thumb-btn.is-active .epaper-thumb-num {
+    background: #e11d48;
+}
+
+/* Optional editor supplied label. */
+.epaper-thumb-label {
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Rail scroll arrows */
+.epaper-thumb-nav,
+.epaper-thumb-nav:hover,
+.epaper-thumb-nav:focus,
+.epaper-thumb-nav:active {
+    display: flex !important;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    min-height: 0;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 50% !important;
+    background: rgba(255, 255, 255, 0.92) !important;
+    background-image: none !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+    color: #1e293b !important;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.epaper-thumb-nav:hover {
+    background: #ffffff !important;
+}
+
+.epaper-thumb-nav[hidden] {
+    display: none !important;
+}
+
+.epaper-thumb-nav .dashicons {
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+    line-height: 18px;
+}
+
+@media (max-width: 782px) {
+    /* The reader box was locked to min-height 650px and vertically centred. A
+       portrait page at phone width is shorter than that, so it floated in the
+       middle with dead space above and below. */
+    .slider-container {
+        min-height: 0;
+        padding: 6px 0;
+        align-items: flex-start;
+    }
+
+    .epaper-single-area {
+        padding: 16px 12px !important;
+    }
+
+    .epaper-body {
+        gap: 10px;
+    }
+
+    .epaper-page-skeleton,
+    .image-slide img[data-src] {
+        min-height: 42vh;
+    }
+
+    .epaper-pdf-embed,
+    .zoom-container iframe {
+        min-height: 0 !important;
+    }
+
+    /* Side rails stay on the side on phones too, just compacted: a full width
+       rail would leave no room for the page itself. */
+    .epaper-thumbs-left > .epaper-thumb-strip,
+    .epaper-thumbs-right > .epaper-thumb-strip {
+        width: 88px;
+        padding: 10px 6px;
+    }
+
+    .epaper-thumbs-left .epaper-thumb-item,
+    .epaper-thumbs-right .epaper-thumb-item {
+        padding: 4px 0 !important;
+    }
+
+    .epaper-thumbs-left .epaper-thumb-btn,
+    .epaper-thumbs-right .epaper-thumb-btn {
+        width: 100%;
+        padding: 3px !important;
+        gap: 3px;
+    }
+
+    .epaper-thumbs-left .epaper-thumb-frame img,
+    .epaper-thumbs-right .epaper-thumb-frame img {
+        height: auto;
+        max-height: 104px;
+        object-fit: contain;
+    }
+
+    .epaper-thumbs-left .epaper-thumb-fallback,
+    .epaper-thumbs-right .epaper-thumb-fallback {
+        height: 84px;
+    }
+
+    /* No room for section names beside the page at this width. */
+    .epaper-thumbs-left .epaper-thumb-label,
+    .epaper-thumbs-right .epaper-thumb-label {
+        display: none;
+    }
+
+    .epaper-thumbs-left .epaper-thumb-nav,
+    .epaper-thumbs-right .epaper-thumb-nav {
+        width: 26px;
+        height: 26px;
+    }
+
+    .epaper-thumbs-left .epaper-thumb-nav .dashicons,
+    .epaper-thumbs-right .epaper-thumb-nav .dashicons {
+        width: 15px;
+        height: 15px;
+        font-size: 15px;
+        line-height: 15px;
+    }
+
+    /* Show the whole page rather than a cropped top slice. */
+    .epaper-thumb-frame img {
+        height: auto;
+        max-height: 112px;
+        object-fit: contain;
+    }
+
+    .epaper-thumb-fallback {
+        height: 96px;
+    }
+
+    .epaper-thumb-num {
+        right: 2px;
+        bottom: 2px;
+        padding: 0 4px;
+        font-size: 10px;
+    }
+}
+
+/* ------------------------------------------------------------------
+   Accessibility (added in 1.3.0)
+------------------------------------------------------------------ */
+/* The arrows became real <button>s for keyboard access. Reset only what the
+   browser adds - `background: none` here wiped out the dark circle defined
+   above and left the arrows invisible. */
+.arrow {
+    padding: 0;
+    font: inherit;
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+}
+
+.sk-control-button:focus-visible,
+.arrow:focus-visible,
+.epaper-thumb-btn:focus-visible,
+.epaper-wrapper:focus-visible {
+    outline: 3px solid #2563eb;
+    outline-offset: 2px;
+}
+
+.epaper-wrapper:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* ------------------------------------------------------------------
+   Archive filter bar (added in 1.3.0)
+------------------------------------------------------------------ */
+.epaper-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    max-width: 1200px;
+    margin: 0 auto 24px;
+    padding: 14px 16px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+}
+
+.epaper-filter-field {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 0 1 auto;
+}
+
+.epaper-filter-search {
+    flex: 1 1 220px;
+    min-width: 180px;
+}
+
+.epaper-filter-search .dashicons {
+    position: absolute;
+    left: 10px;
+    color: #94a3b8;
+    pointer-events: none;
+}
+
+/* Styled by element, not by type: the date field is swapped to type="text"
+   when the calendar upgrade runs, which silently dropped every
+   input[type="date"] rule and left the field unstyled. */
+.epaper-filter-bar input,
+.epaper-filter-bar select {
+    width: 100%;
+    height: 42px;
+    padding: 0 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background: #f8fafc;
+    color: #1e293b;
+    font-size: 14px;
+    line-height: 1.4;
+    box-sizing: border-box;
+}
+
+.epaper-filter-bar input[type="search"] {
+    padding-left: 34px;
+}
+
+.epaper-filter-bar .epaper-filter-field {
+    min-width: 0;
+}
+
+/* WebKit's native clear button keeps the default arrow cursor and sits tight
+   against the edge. Restyle it so it reads as a control. */
+.epaper-filter-bar input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    margin-left: 6px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%2364748b' d='M8 6.586 4.707 3.293 3.293 4.707 6.586 8l-3.293 3.293 1.414 1.414L8 9.414l3.293 3.293 1.414-1.414L9.414 8l3.293-3.293-1.414-1.414z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 12px 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.15s ease, background-color 0.15s ease;
+}
+
+.epaper-filter-bar input[type="search"]::-webkit-search-cancel-button:hover {
+    background-color: #e2e8f0;
+    opacity: 1;
+}
+
+/* Firefox and IE render their own clear affordance; suppress the duplicate. */
+.epaper-filter-bar input[type="search"]::-ms-clear {
+    display: none;
+}
+
+.epaper-filter-bar .sk-epaper-date-field {
+    min-width: 158px;
+    color-scheme: light;
+    cursor: pointer;
+}
+
+/* readOnly is what stops the mobile keyboard covering the calendar; it must
+   not make the field look disabled. background-color, not the shorthand, so it
+   cannot erase the calendar icon painted below. */
+.epaper-filter-bar .sk-epaper-date-field[readonly] {
+    background-color: #f8fafc;
+    color: #1e293b;
+    opacity: 1;
+}
+
+.epaper-filter-bar .sk-epaper-date-field::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    opacity: 0.55;
+}
+
+.epaper-filter-bar .sk-epaper-date-field::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+}
+
+.epaper-filter-bar input:focus,
+.epaper-filter-bar select:focus {
+    border-color: #94a3b8;
+    background: #ffffff;
+    outline: 2px solid rgba(37, 99, 235, 0.25);
+    outline-offset: 1px;
+}
+
+.epaper-filter-submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 42px;
+    padding: 0 18px;
+    border: 0;
+    border-radius: 8px;
+    background: #1e293b;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.epaper-filter-submit:hover {
+    background: #000000;
+    color: #ffffff;
+}
+
+.epaper-filter-reset {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    height: 42px;
+    padding: 0 12px;
+    color: #64748b;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.epaper-filter-reset:hover {
+    color: #b91c1c;
+}
+
+.epaper-filter-bar .dashicons {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+}
+
+@media (max-width: 600px) {
+    .epaper-filter-bar {
+        gap: 8px;
+        padding: 12px;
+    }
+
+    .epaper-filter-field,
+    .epaper-filter-search {
+        flex: 1 1 100%;
+    }
+
+    .epaper-filter-submit {
+        flex: 1 1 auto;
+        justify-content: center;
+    }
+}
+
+/* ------------------------------------------------------------------
+   Related editions under the reader (added in 1.3.0)
+------------------------------------------------------------------ */
+/* Align with the reader above it: .epaper-wrapper is width:100% inside
+   .epaper-single-area, so the related block must not add a max-width or side
+   padding of its own or its edges sit inside the reader's. */
+.epaper-related {
+    width: 100%;
+    max-width: none;
+    margin: 32px 0 44px;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.epaper-related-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.epaper-related-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: #1e293b;
+}
+
+.epaper-related-title .dashicons {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    color: #64748b;
+}
+
+.epaper-related-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    color: #64748b;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.epaper-related-all:hover {
+    color: #000000;
+}
+
+.epaper-related-all .dashicons {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+}
+
+/* auto-fit (not auto-fill) so six cards spread evenly instead of leaving an
+   empty track and orphaning the last card onto its own row. */
+/* Exactly the archive listing card - no overrides beyond the grid itself.
+   Three fixed columns rather than auto-fit: the row should read as a tidy
+   strip under the reader, not reflow to four or five cards on a wide screen.
+------------------------------------------------------------------ */
+.epaper-related-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 30px;
+}
+
+@media (max-width: 900px) {
+    .epaper-related-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+    }
+}
+
+@media (max-width: 560px) {
+    .epaper-related-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+}
+
+@media (max-width: 600px) {
+    .epaper-related {
+        margin: 22px 0 30px;
+        padding: 0;
+    }
+
+    .epaper-related-title {
+        font-size: 16px;
+    }
+
+}
+
+/* Empty-state action. Kept separate from .epaper-card-cta-btn, which is now a
+   32px icon circle inside cards and squashed this label into a black blob. */
+.epaper-empty-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 4px;
+    padding: 10px 20px;
+    border: 1px solid #0f172a;
+    border-radius: 10px;
+    background: #0f172a;
+    color: #ffffff !important;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none !important;
+    transition: background 0.2s ease;
+}
+
+.epaper-empty-cta:hover {
+    background: #000000;
+    color: #ffffff !important;
+}
+
+.epaper-empty-cta .dashicons {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+}
+
+/* ------------------------------------------------------------------
+   Archive date picker (added in 1.3.0)
+
+   WordPress registers jquery-ui-datepicker but ships no frontend stylesheet
+   for it, so the calendar is styled here to match the filter bar.
+------------------------------------------------------------------ */
+.epaper-filter-bar .sk-epaper-date-field.sk-datepicker-input {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='%2364748b' d='M6 2v2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H8V2H6zM4 8h12v8H4V8z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px 16px;
+    padding-right: 34px;
+}
+
+#ui-datepicker-div.ui-datepicker {
+    z-index: 9999 !important;
+    width: 268px;
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.18);
+    font-size: 13px;
+}
+
+#ui-datepicker-div .ui-datepicker-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #eef2f7;
+}
+
+#ui-datepicker-div .ui-datepicker-title {
+    display: flex;
+    gap: 6px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+#ui-datepicker-div .ui-datepicker-title select {
+    height: 30px;
+    padding: 0 6px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background: #f8fafc;
+    font-size: 13px;
+}
+
+#ui-datepicker-div .ui-datepicker-prev,
+#ui-datepicker-div .ui-datepicker-next {
+    position: absolute;
+    top: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    cursor: pointer;
+    text-indent: -9999px;
+    overflow: hidden;
+}
+
+#ui-datepicker-div .ui-datepicker-prev { left: 0; }
+#ui-datepicker-div .ui-datepicker-next { right: 0; }
+
+#ui-datepicker-div .ui-datepicker-prev:hover,
+#ui-datepicker-div .ui-datepicker-next:hover {
+    background-color: #f1f5f9;
+}
+
+#ui-datepicker-div .ui-datepicker-prev::after,
+#ui-datepicker-div .ui-datepicker-next::after {
+    content: "";
+    position: absolute;
+    top: 9px;
+    left: 10px;
+    width: 8px;
+    height: 8px;
+    border-top: 2px solid #475569;
+    border-right: 2px solid #475569;
+}
+
+#ui-datepicker-div .ui-datepicker-prev::after { transform: rotate(-135deg); }
+#ui-datepicker-div .ui-datepicker-next::after { transform: rotate(45deg); left: 8px; }
+
+#ui-datepicker-div .ui-datepicker-prev.ui-state-disabled,
+#ui-datepicker-div .ui-datepicker-next.ui-state-disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+
+#ui-datepicker-div table {
+    width: 100%;
+    margin: 0;
+    border: 0;
+    border-collapse: collapse;
+}
+
+#ui-datepicker-div th {
+    padding: 4px 0;
+    border: 0;
+    color: #64748b;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+#ui-datepicker-div td {
+    padding: 1px;
+    border: 0;
+}
+
+#ui-datepicker-div td a,
+#ui-datepicker-div td span {
+    display: block;
+    padding: 6px 0;
+    border-radius: 6px;
+    color: #0f172a;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none !important;
+}
+
+/* Days with an edition. */
+#ui-datepicker-div td a:hover {
+    background: #e2e8f0;
+}
+
+#ui-datepicker-div td.sk-has-edition a {
+    background: #f1f5f9;
+}
+
+#ui-datepicker-div td.sk-has-edition a:hover,
+#ui-datepicker-div td a.ui-state-active {
+    background: #0f172a;
+    color: #ffffff;
+}
+
+/* Days without one - visibly out of reach rather than silently empty. */
+#ui-datepicker-div td.sk-no-edition span,
+#ui-datepicker-div td.ui-state-disabled span {
+    color: #cbd5e1;
+    cursor: default;
+}
+
+#ui-datepicker-div td.ui-datepicker-today a {
+    box-shadow: inset 0 0 0 1px #94a3b8;
 }
