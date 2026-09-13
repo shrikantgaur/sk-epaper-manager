@@ -1,0 +1,1013 @@
+# Copyright (C) 2026 Shri Kant Gaur
+# This file is distributed under the GPLv2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: SK ePaper Manager 2.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sk-epaper-manager\n"
+"POT-Creation-Date: 2026-09-13 13:56+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: sk-epaper-manager\n"
+
+
+#. translators: %d: Total number of available ePaper editions
+#: templates/archive-epaper.php:68
+msgid "%d Edition Available"
+msgid_plural "%d Editions Available"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %d: Number of pages in the edition
+#: includes/class-sk-epaper-admin.php:349 includes/class-sk-epaper-renderer.php:802 templates/admin/analytics-page.php:280
+msgid "%d Page"
+msgid_plural "%d Pages"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %d: Number of sample editions installed
+#: templates/admin/guide-page.php:168
+msgid "%d sample edition installed."
+msgid_plural "%d sample editions installed."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/class-sk-epaper-admin.php:369 templates/admin/analytics-page.php:302
+msgid "&laquo; Previous"
+msgstr ""
+
+#: templates/admin/shortcodes-page.php:49
+msgid "1. Single ePaper Reader"
+msgstr ""
+
+#: templates/admin/shortcodes-page.php:94
+msgid "2. ePaper Archive Grid"
+msgstr ""
+
+#: templates/admin/guide-page.php:134
+msgid "A grid of the latest editions."
+msgstr ""
+
+#: templates/admin/guide-page.php:110
+msgid "A view is counted when a reader opens an edition, not when it appears in the archive list."
+msgstr ""
+
+#: includes/class-sk-epaper-cpt.php:31
+msgid "Add New"
+msgstr ""
+
+#: includes/class-sk-epaper-cpt.php:73
+msgid "Add New Edition"
+msgstr ""
+
+#: includes/class-sk-epaper-cpt.php:95
+msgid "Add New Language"
+msgstr ""
+
+#: includes/class-sk-epaper-cpt.php:32
+msgid "Add New ePaper"
+msgstr ""
+
+#: templates/admin/shortcodes-page.php:164
+msgid "Add a Shortcode block inside any page or post, then paste your copied shortcode."
+msgstr ""
+
+#: includes/class-sk-epaper-admin.php:518
+msgid "Add ePaper Pages"
+msgstr ""
+
+#: templates/admin/guide-page.php:67
+msgid "Add the edition"
+msgstr ""
+
+#. translators: %d: Total number of pages
+#: includes/class-sk-epaper-admin.php:116
+msgid "Add to ePaper"
+msgstr ""
+
+#: templates/admin/shortcodes-page.php:123
+msgid "All Cities"
+msgstr ""
+
+#: templates/admin/analytics-page.php:157
+msgid "All Cities / Editions"
+msgstr ""
+
+#: includes/class-sk-epaper-cpt.php:68 templates/archive-epaper.php:87
+msgid "All Editions"
+msgstr ""
+
+#: includes/class-sk-epaper-cpt.php:92 templates/admin/analytics-page.php:170 templates/admin/shortcodes-page.php:136 templates/archive-epaper.php:101
+msgid "All Languages"
+msgstr ""
+
+#: includes/class-sk-epaper-cpt.php:30
+msgid "All ePapers"
+msgstr ""
+
+#: templates/admin/settings-page.php:76
+msgid "Allow visitors to download ePaper pages"
+msgstr ""
+
+#: templates/admin/settings-page.php:89
+msgid "Allow visitors to print current or all pages"
+msgstr ""
+
+#: includes/class-sk-epaper-admin.php:522
+msgid "Allowed Formats:"
+msgstr ""
+
+#: includes/class-sk-epaper-admin.php:35
+msgid "Analytics & Stats"
+msgstr ""
+
+#: templates/archive-epaper.php:115
+msgid "Any Month"
+msgstr ""
+
+#: templates/archive-epaper.php:136
+msgid "Any date"
+msgstr ""
+
+#: templates/admin/settings-page.php:186
+msgid "Appearance & Editing"
+msgstr ""
+
+#: templates/admin/analytics-page.php:195
+msgid "Apply Filter"
+msgstr ""
+
+#: templates/admin/analytics-page.php:130
+msgid "Avg Reads per Edition"
+msgstr ""
+
+#: templates/admin/settings-page.php:132
+msgid "Below the reader"
+msgstr ""
+
+#: templates/admin/settings-page.php:217
+msgid "Block Editor"
+msgstr ""
+
+#: templates/admin/guide-page.php:203
+msgid "Brand colour: used for the arrows, the active page and pagination."
+msgstr ""
+
+#: templates/admin/settings-page.php:169
+msgid "Browser embed (default)"
+msgstr ""
+
+#. translators: %d: Total number of pages
+#: includes/class-sk-epaper-admin.php:115
+msgid "Choose Images or PDF Files for ePaper Pages"
+msgstr ""
+
+#: includes/class-sk-epaper-admin.php:312 templates/admin/analytics-page.php:155 templates/admin/analytics-page.php:233
+msgid "City / Edition"
+msgstr ""
+
+#: templates/admin/shortcodes-page.php:121
+msgid "City / Edition:"
+msgstr ""
+
+#: templates/archive-epaper.php:148
+msgid "Clear"
+msgstr ""
+
+#: templates/archive-epaper.php:174
+msgid "Clear filters"
+msgstr ""
+
+#: templates/admin/settings-page.php:190
+msgid "Content Width"
+msgstr ""
+
+#: templates/admin/guide-page.php:202
+msgid "Content Width: match your theme so the reader lines up with the rest of your site."
+msgstr ""
+
+#: includes/class-sk-epaper-admin.php:120
+msgid "Copied!"
+msgstr ""
+
+#: templates/admin/shortcodes-page.php:107 templates/admin/shortcodes-page.php:64
+msgid "Copy Shortcode"
+msgstr ""
+
+#: templates/admin/shortcodes-page.php:114
+msgid "Count:"
+msgstr ""
+
+#: templates/admin/guide-page.php:113
+msgid "Counting happens through a small background request, so it keeps working on sites with full page caching."
+msgstr ""
+
+#: templates/admin/guide-page.php:114
+msgid "Counts are per edition, not per page. Turning pages inside an edition does not add views."
+msgstr ""
+
+#: templates/admin/settings-page.php:41
+msgid "Customize viewer toolbar controls, buttons, and brand color theme."
+msgstr ""
+
+#: templates/admin/settings-page.php:234
+msgid "Data"
+msgstr ""
+
+#: templates/admin/settings-page.php:243
+msgid "Delete plugin settings and stored ePaper data when the plugin is deleted"
+msgstr ""
+
+#: templates/admin/shortcodes-page.php:100
+msgid "Displays a grid listing of ePaper editions with optional filters."
+msgstr ""
+
+#: includes/class-sk-epaper-renderer.php:232
+msgid "Done"
+msgstr ""
+
+#: templates/admin/settings-page.php:71
+msgid "Download Button"
+msgstr ""
+
+#: includes/class-sk-epaper-renderer.php:338
+msgid "Download Page"
+msgstr ""
+
+#: includes/class-sk-epaper-renderer.php:338
+msgid "Download current page"
+msgstr ""
+
+#: templates/admin/shortcodes-page.php:173
+msgid "Drag the Shortcode widget onto your Elementor canvas and paste the code into the Shortcode field."
+msgstr ""
+
+#: includes/class-sk-epaper-admin.php:117 includes/class-sk-epaper-admin.php:485
+msgid "Drag to reorder page"
+msgstr ""
+
+#: templates/admin/shortcodes-page.php:37
+msgid "Easily embed any ePaper viewer or edition grid into Pages, Posts, Widgets, Elementor, Divi, or Gutenberg."
+msgstr ""
+
+#: includes/class-sk-epaper-admin.php:341 templates/admin/analytics-page.php:267
+msgid "Edit"
+msgstr ""
+
+#: includes/class-sk-epaper-cpt.php:71
+msgid "Edit Edition"
+msgstr ""
+
+#: includes/class-sk-epaper-cpt.php:93
+msgid "Edit Language"
+msgstr ""
+
+#: includes/class-sk-epaper-cpt.php:33
+msgid "Edit ePaper"
+msgstr ""
+
+#: templates/admin/settings-page.php:222
+msgid "Edit ePapers with the block editor instead of the classic editor"
+msgstr ""
+
+#: includes/class-sk-epaper-admin.php:621 templates/archive-epaper.php:85
+msgid "Edition"
+msgstr ""
+
+#: includes/class-sk-epaper-cpt.php:66
+msgctxt "taxonomy singular name"
+msgid "Edition"
+msgstr ""
+
+#: templates/admin/analytics-page.php:180
+msgid "Edition Date Range"
+msgstr ""
+
+#: templates/admin/shortcodes-page.php:96
+msgid "Edition Grid"
+msgstr ""
+
+#: includes/class-sk-epaper-admin.php:311 templates/admin/analytics-page.php:232
+msgid "Edition Title"
+msgstr ""
+
+#: templates/archive-epaper.php:126 templates/archive-epaper.php:137
+msgid "Edition date"
+msgstr ""
+
+#. translators: %s: Taxonomy term name
+#: templates/archive-epaper.php:27
+msgid "Edition: %s"
+msgstr ""
+
+#: includes/class-sk-epaper-cpt.php:75
+msgid "Editions"
+msgstr ""
+
+#: includes/class-sk-epaper-cpt.php:65
+msgctxt "taxonomy general name"
+msgid "Editions"
+msgstr ""
+
+#: templates/admin/shortcodes-page.php:172
+msgid "Elementor Page Builder"
+msgstr ""
+
+#: templates/admin/shortcodes-page.php:56
+msgid "Embeds a responsive ePaper viewer slider for a specific edition."
+msgstr ""
+
+#: templates/archive-epaper.php:142
+msgid "Filter"
+msgstr ""
+
+#: templates/admin/analytics-page.php:184
+msgid "From date"
+msgstr ""
+
+#: templates/admin/settings-page.php:209
+msgid "Frontend Primary Brand Color"
+msgstr ""
+
+#: includes/class-sk-epaper-admin.php:25 includes/class-sk-epaper-admin.php:26 templates/admin/guide-page.php:24
+msgid "Getting Started"
+msgstr ""
+
+#. translators: 1: Page label, 2: Page number
+#: includes/class-sk-epaper-renderer.php:577
+msgid "Go to %1$s (page %2$d)"
+msgstr ""
+
+#. translators: %s: Link to the Add New ePaper screen
+#: templates/admin/guide-page.php:72
+msgid "Go to %s and give it a title, for example \"City Edition - 12 September\"."
+msgstr ""
+
+#. translators: %d: Page number
+#: includes/class-sk-epaper-renderer.php:573
+msgid "Go to page %d"
+msgstr ""
+
+#: templates/admin/shortcodes-page.php:163
+msgid "Gutenberg Block Editor"
+msgstr ""
+
+#: templates/admin/settings-page.php:201
+msgid "Header Background Color"
+msgstr ""
+
+#: templates/admin/settings-page.php:162
+msgid "How many editions to show on the ePaper archive and taxonomy pages before paginating (Default: 24)."
+msgstr ""
+
+#: templates/admin/settings-page.php:124
+msgid "How many to show. Matched first by Edition, then Language, then most recent."
+msgstr ""
+
+#: templates/admin/guide-page.php:107
+msgid "How view counts work"
+msgstr ""
+
+#: templates/admin/guide-page.php:181
+msgid "Import sample editions"
+msgstr ""
+
+#: templates/admin/guide-page.php:80
+msgid "In \"ePaper Details & Pages\", click Add ePaper Pages and select the images or PDFs for that day. Drag them to set the order."
+msgstr ""
+
+#. translators: %s: Link to the shortcode helper screen
+#: templates/admin/guide-page.php:147
+msgid "In the block editor, search for \"ePaper\" to add the same thing as a block. More options on the %s screen."
+msgstr ""
+
+#: templates/admin/shortcodes-page.php:52
+msgid "Interactive Reader"
+msgstr ""
+
+#: includes/class-sk-epaper-renderer.php:884
+msgid "Invalid ePaper ID."
+msgstr ""
+
+#. translators: %s: Comma separated list of rejected file names
+#: includes/class-sk-epaper-admin.php:123
+msgid "Invalid file format rejected: %s"
+msgstr ""
+
+#: includes/class-sk-epaper-admin.php:313 includes/class-sk-epaper-admin.php:622 templates/admin/analytics-page.php:168 templates/admin/analytics-page.php:234 templates/archive-epaper.php:99
+msgid "Language"
+msgstr ""
+
+#: includes/class-sk-epaper-cpt.php:90
+msgctxt "taxonomy singular name"
+msgid "Language"
+msgstr ""
+
+#: templates/admin/shortcodes-page.php:134
+msgid "Language:"
+msgstr ""
+
+#. translators: %s: Taxonomy term name
+#: templates/archive-epaper.php:32
+msgid "Language: %s"
+msgstr ""
+
+#: includes/class-sk-epaper-cpt.php:97
+msgid "Languages"
+msgstr ""
+
+#: includes/class-sk-epaper-cpt.php:89
+msgctxt "taxonomy general name"
+msgid "Languages"
+msgstr ""
+
+#: templates/admin/settings-page.php:148
+msgid "Lazy Load Pages"
+msgstr ""
+
+#: templates/admin/settings-page.php:133
+msgid "Left side"
+msgstr ""
+
+#: templates/admin/settings-page.php:153
+msgid "Load pages as the reader moves through them instead of all at once (strongly recommended)"
+msgstr ""
+
+#: templates/admin/settings-page.php:196
+msgid "Maximum width of the reader and the archive, so both line up with the rest of your theme. Set to 0 to remove the limit and let your theme's own container control the width."
+msgstr ""
+
+#: templates/archive-epaper.php:113
+msgid "Month"
+msgstr ""
+
+#: includes/class-sk-epaper-renderer.php:665
+msgid "More Editions"
+msgstr ""
+
+#: templates/admin/analytics-page.php:215
+msgid "Most Read ePaper Editions"
+msgstr ""
+
+#: includes/class-sk-epaper-admin.php:462
+msgid "Name a page to label it in the reader, e.g. Front Page, Sports, City."
+msgstr ""
+
+#: templates/admin/guide-page.php:83
+msgid "Name the pages (optional)"
+msgstr ""
+
+#: includes/class-sk-epaper-cpt.php:74
+msgid "New Edition Name"
+msgstr ""
+
+#: includes/class-sk-epaper-cpt.php:96
+msgid "New Language Name"
+msgstr ""
+
+#: includes/class-sk-epaper-cpt.php:34
+msgid "New ePaper"
+msgstr ""
+
+#: includes/class-sk-epaper-renderer.php:231 templates/archive-epaper.php:187
+msgid "Next"
+msgstr ""
+
+#: includes/class-sk-epaper-admin.php:370 templates/admin/analytics-page.php:303
+msgid "Next &raquo;"
+msgstr ""
+
+#: includes/class-sk-epaper-renderer.php:367
+msgid "Next page"
+msgstr ""
+
+#: templates/archive-epaper.php:167
+msgid "No ePaper editions found matching this category."
+msgstr ""
+
+#: includes/class-sk-epaper-cpt.php:37
+msgid "No ePapers found"
+msgstr ""
+
+#: includes/class-sk-epaper-cpt.php:38
+msgid "No ePapers found in Trash"
+msgstr ""
+
+#: includes/class-sk-epaper-renderer.php:970
+msgid "No ePapers found."
+msgstr ""
+
+#: templates/archive-epaper.php:165
+msgid "No editions match these filters."
+msgstr ""
+
+#: includes/class-sk-epaper-admin.php:384 templates/admin/analytics-page.php:318
+msgid "No matching analytics data found. Try adjusting your filters."
+msgstr ""
+
+#: templates/admin/guide-page.php:160
+msgid "Not ready to upload a real edition yet? Create three sample editions with six labelled pages each, so you can try the reader, the filters and the settings straight away."
+msgstr ""
+
+#: templates/admin/settings-page.php:79
+msgid "Note: this hides the button only. Uploaded files stay reachable at their direct media URLs."
+msgstr ""
+
+#: templates/admin/guide-page.php:118
+msgid "Numbers can look lower than other analytics tools because those often count every request, including repeats and bots."
+msgstr ""
+
+#: templates/admin/settings-page.php:246
+msgid "Off by default, so deleting and reinstalling the plugin for troubleshooting is safe. ePaper posts and uploaded media are never removed either way."
+msgstr ""
+
+#: templates/admin/settings-page.php:238
+msgid "On Uninstall"
+msgstr ""
+
+#: templates/admin/guide-page.php:130
+msgid "One edition with the full reader."
+msgstr ""
+
+#: templates/admin/guide-page.php:138
+msgid "Only one city or edition."
+msgstr ""
+
+#: templates/admin/guide-page.php:208
+msgid "Open Settings"
+msgstr ""
+
+#: templates/admin/settings-page.php:166
+msgid "PDF Rendering"
+msgstr ""
+
+#: templates/admin/guide-page.php:201
+msgid "PDF Rendering: choose \"Page images\" so PDF editions zoom, print and swipe like image editions."
+msgstr ""
+
+#: templates/admin/settings-page.php:176
+msgid "PDF.js is unavailable: add pdf.min.js and pdf.worker.min.js to assets/vendor/pdfjs/ to enable it."
+msgstr ""
+
+#: templates/admin/settings-page.php:171
+msgid "PDF.js renderer"
+msgstr ""
+
+#: templates/admin/shortcodes-page.php:147 templates/admin/shortcodes-page.php:83
+msgid "PHP Template Code:"
+msgstr ""
+
+#. translators: %d: Page number
+#: includes/class-sk-epaper-admin.php:112 includes/class-sk-epaper-admin.php:482
+msgid "Page %d"
+msgstr ""
+
+#: templates/admin/shortcodes-page.php:157
+msgid "Page Builder & Theme Integration Guide"
+msgstr ""
+
+#: templates/admin/settings-page.php:104
+msgid "Page Thumbnails"
+msgstr ""
+
+#: templates/admin/settings-page.php:170
+msgid "Page images (recommended)"
+msgstr ""
+
+#: templates/admin/settings-page.php:174
+msgid "Page images use the preview WordPress generates for each PDF, so zoom, swipe, printing and lazy loading all behave exactly like image editions. Requires Imagick with Ghostscript on the server."
+msgstr ""
+
+#: includes/class-sk-epaper-admin.php:503
+msgid "Page label shown in the reader"
+msgstr ""
+
+#: includes/class-sk-epaper-renderer.php:346
+msgid "Page:"
+msgstr ""
+
+#: includes/class-sk-epaper-admin.php:314 includes/class-sk-epaper-admin.php:624 templates/admin/analytics-page.php:235
+msgid "Pages"
+msgstr ""
+
+#: includes/class-sk-epaper-cpt.php:69
+msgid "Parent Edition"
+msgstr ""
+
+#: includes/class-sk-epaper-cpt.php:70
+msgid "Parent Edition:"
+msgstr ""
+
+#: templates/admin/settings-page.php:144
+msgid "Performance"
+msgstr ""
+
+#: includes/class-sk-epaper-admin.php:270
+msgid "Permission denied."
+msgstr ""
+
+#. translators: %s: Comma separated list of rejected file names
+#: includes/class-sk-epaper-admin.php:124
+msgid "Please select only Image (JPG, PNG, WEBP) or PDF files for ePaper pages."
+msgstr ""
+
+#: includes/class-sk-epaper-renderer.php:230 templates/archive-epaper.php:186
+msgid "Previous"
+msgstr ""
+
+#: includes/class-sk-epaper-renderer.php:361
+msgid "Previous page"
+msgstr ""
+
+#: includes/class-sk-epaper-renderer.php:333
+msgid "Print All Pages"
+msgstr ""
+
+#: templates/admin/settings-page.php:84
+msgid "Print Buttons"
+msgstr ""
+
+#: includes/class-sk-epaper-renderer.php:330
+msgid "Print Page"
+msgstr ""
+
+#: includes/class-sk-epaper-renderer.php:333
+msgid "Print all pages"
+msgstr ""
+
+#: includes/class-sk-epaper-renderer.php:330
+msgid "Print current page"
+msgstr ""
+
+#: includes/class-sk-epaper-admin.php:623
+msgid "Publication Date"
+msgstr ""
+
+#: includes/class-sk-epaper-admin.php:443
+msgid "Publication Date:"
+msgstr ""
+
+#: templates/admin/guide-page.php:91
+msgid "Publish"
+msgstr ""
+
+#: templates/admin/guide-page.php:63
+msgid "Publish an edition"
+msgstr ""
+
+#: templates/admin/guide-page.php:27
+msgid "Publish your first digital edition in a few minutes."
+msgstr ""
+
+#: templates/admin/analytics-page.php:114
+msgid "Published Editions"
+msgstr ""
+
+#: includes/class-sk-epaper-admin.php:310 templates/admin/analytics-page.php:230
+msgid "Rank"
+msgstr ""
+
+#. translators: %s: ePaper edition title
+#: includes/class-sk-epaper-renderer.php:786
+msgid "Read %s"
+msgstr ""
+
+#: includes/class-sk-epaper-renderer.php:809
+msgid "Read ePaper"
+msgstr ""
+
+#: templates/admin/settings-page.php:67
+msgid "Reader Controls"
+msgstr ""
+
+#: templates/admin/analytics-page.php:95
+msgid "Real-time reader engagement metrics, popular edition rankings, and station analytics."
+msgstr ""
+
+#: templates/admin/settings-page.php:114
+msgid "Related Editions"
+msgstr ""
+
+#: includes/class-sk-epaper-admin.php:119 includes/class-sk-epaper-admin.php:506
+msgid "Remove"
+msgstr ""
+
+#: includes/class-sk-epaper-admin.php:118 includes/class-sk-epaper-admin.php:505
+msgid "Remove Page"
+msgstr ""
+
+#: templates/admin/guide-page.php:186
+msgid "Remove sample content"
+msgstr ""
+
+#: templates/admin/analytics-page.php:200
+msgid "Reset Filters"
+msgstr ""
+
+#: templates/admin/settings-page.php:134
+msgid "Right side"
+msgstr ""
+
+#. translators: %s: Edition date
+#: includes/class-sk-epaper-demo.php:143
+msgid "Sample Edition - %s"
+msgstr ""
+
+#: templates/admin/guide-page.php:158
+msgid "Sample content"
+msgstr ""
+
+#: includes/class-sk-epaper-demo.php:146
+msgid "Sample edition created by SK ePaper Manager so you can try the reader."
+msgstr ""
+
+#: templates/admin/guide-page.php:192
+msgid "Sample pages are drawn on your own server, nothing is downloaded. Removing them deletes only the sample editions and their images - your own editions are never touched."
+msgstr ""
+
+#: templates/admin/settings-page.php:256
+msgid "Save Settings"
+msgstr ""
+
+#: includes/class-sk-epaper-cpt.php:67
+msgid "Search Editions"
+msgstr ""
+
+#: includes/class-sk-epaper-cpt.php:91
+msgid "Search Languages"
+msgstr ""
+
+#: templates/admin/analytics-page.php:145
+msgid "Search Title"
+msgstr ""
+
+#: includes/class-sk-epaper-cpt.php:36
+msgid "Search ePapers"
+msgstr ""
+
+#: templates/admin/analytics-page.php:148
+msgid "Search edition..."
+msgstr ""
+
+#: templates/archive-epaper.php:77
+msgid "Search editions"
+msgstr ""
+
+#: templates/archive-epaper.php:80
+msgid "Search editions..."
+msgstr ""
+
+#: templates/admin/guide-page.php:112
+msgid "Search engine crawlers and other known bots are ignored."
+msgstr ""
+
+#: includes/class-sk-epaper-blocks.php:91
+msgid "Select an ePaper edition to display."
+msgstr ""
+
+#: templates/admin/settings-page.php:205
+msgid "Select background color for the ePaper viewer header toolbar (Default: #000000)."
+msgstr ""
+
+#: templates/admin/shortcodes-page.php:71
+msgid "Select ePaper Edition:"
+msgstr ""
+
+#: templates/admin/settings-page.php:213
+msgid "Select primary accent color for frontend buttons, hovers, navigation arrows, and taxonomy badges (Default: #000000)."
+msgstr ""
+
+#: templates/admin/guide-page.php:87
+msgid "Set the publication date, Edition and Language"
+msgstr ""
+
+#: includes/class-sk-epaper-admin.php:53
+msgid "Settings"
+msgstr ""
+
+#: templates/admin/settings-page.php:52
+msgid "Settings saved successfully."
+msgstr ""
+
+#: includes/class-sk-epaper-admin.php:121
+msgid "Shortcode copied to clipboard!"
+msgstr ""
+
+#: templates/admin/shortcodes-page.php:34
+msgid "Shortcodes & Embed Documentation"
+msgstr ""
+
+#. translators: %s: Link to the shortcode helper screen
+#: includes/class-sk-epaper-admin.php:44 templates/admin/guide-page.php:148
+msgid "Shortcodes & Helper"
+msgstr ""
+
+#: templates/admin/settings-page.php:99
+msgid "Show Zoom In / Zoom Out buttons"
+msgstr ""
+
+#: templates/admin/settings-page.php:119
+msgid "Show a \"More Editions\" row below the reader"
+msgstr ""
+
+#: templates/admin/guide-page.php:124
+msgid "Show ePapers anywhere"
+msgstr ""
+
+#: includes/class-sk-epaper-renderer.php:605
+msgid "Show more pages"
+msgstr ""
+
+#: includes/class-sk-epaper-renderer.php:564
+msgid "Show previous pages"
+msgstr ""
+
+#: templates/admin/settings-page.php:109
+msgid "Show the page thumbnail rail for jumping between pages"
+msgstr ""
+
+#: templates/admin/settings-page.php:136
+msgid "Side rails automatically drop below the reader on small screens."
+msgstr ""
+
+#: templates/admin/guide-page.php:88
+msgid "The date drives the archive date filter. Edition and Language become the badges and filters readers use."
+msgstr ""
+
+#. translators: %s: Link to the ePaper archive
+#: templates/admin/guide-page.php:96
+msgid "The edition appears on your archive at %s."
+msgstr ""
+
+#: templates/admin/settings-page.php:225
+msgid "The pages meta box works in both editors. Existing sites keep the classic editor unless you switch here."
+msgstr ""
+
+#: templates/admin/guide-page.php:111
+msgid "The same reader opening the same edition again within 24 hours counts once. Refreshing does not inflate the number."
+msgstr ""
+
+#: templates/admin/shortcodes-page.php:181
+msgid "Theme Templates (PHP)"
+msgstr ""
+
+#: templates/admin/settings-page.php:129
+msgid "Thumbnail Position"
+msgstr ""
+
+#: templates/admin/analytics-page.php:188
+msgid "To date"
+msgstr ""
+
+#: templates/admin/analytics-page.php:122
+msgid "Total Editions Count"
+msgstr ""
+
+#. translators: %d: Total number of pages
+#: includes/class-sk-epaper-admin.php:114 includes/class-sk-epaper-admin.php:436
+msgid "Total Pages: %d"
+msgstr ""
+
+#: includes/class-sk-epaper-admin.php:315 templates/admin/analytics-page.php:238
+msgid "Total Views"
+msgstr ""
+
+#: templates/admin/analytics-page.php:106
+msgid "Total ePaper Reads"
+msgstr ""
+
+#. translators: %d: Total number of ePaper editions
+#: includes/class-sk-epaper-admin.php:391 templates/admin/analytics-page.php:220
+msgid "Total: %d Editions"
+msgstr ""
+
+#: templates/admin/guide-page.php:84
+msgid "Type a label under each page - Front Page, City, Sports - and readers see those names in the page rail."
+msgstr ""
+
+#: includes/class-sk-epaper-cpt.php:72
+msgid "Update Edition"
+msgstr ""
+
+#: includes/class-sk-epaper-cpt.php:94
+msgid "Update Language"
+msgstr ""
+
+#: templates/admin/guide-page.php:79
+msgid "Upload the pages"
+msgstr ""
+
+#: templates/admin/shortcodes-page.php:182
+msgid "Use do_shortcode() inside your theme PHP files (single.php, page.php, header.php)."
+msgstr ""
+
+#: includes/class-sk-epaper-admin.php:342 templates/admin/analytics-page.php:270
+msgid "View"
+msgstr ""
+
+#: includes/class-sk-epaper-renderer.php:668
+msgid "View all"
+msgstr ""
+
+#: includes/class-sk-epaper-cpt.php:35
+msgid "View ePaper"
+msgstr ""
+
+#: includes/class-sk-epaper-admin.php:625
+msgid "Views"
+msgstr ""
+
+#: templates/admin/guide-page.php:198
+msgid "Worth setting up"
+msgstr ""
+
+#: includes/class-sk-epaper-admin.php:68
+msgid "You do not have permission to access this page."
+msgstr ""
+
+#: includes/class-sk-epaper-demo.php:38
+msgid "You do not have permission to do this."
+msgstr ""
+
+#: templates/admin/settings-page.php:94
+msgid "Zoom Controls"
+msgstr ""
+
+#: includes/class-sk-epaper-renderer.php:322
+msgid "Zoom In"
+msgstr ""
+
+#: includes/class-sk-epaper-renderer.php:325
+msgid "Zoom Out"
+msgstr ""
+
+#: includes/class-sk-epaper-cpt.php:28
+msgid "ePaper"
+msgstr ""
+
+#: includes/class-sk-epaper-admin.php:34
+msgid "ePaper Analytics"
+msgstr ""
+
+#: templates/admin/analytics-page.php:92
+msgid "ePaper Analytics & View Statistics"
+msgstr ""
+
+#: includes/class-sk-epaper-admin.php:409
+msgid "ePaper Details & Pages"
+msgstr ""
+
+#: includes/class-sk-epaper-admin.php:459
+msgid "ePaper Pages (Drag & drop to reorder):"
+msgstr ""
+
+#: includes/class-sk-epaper-admin.php:52
+msgid "ePaper Settings"
+msgstr ""
+
+#: includes/class-sk-epaper-admin.php:43
+msgid "ePaper Shortcodes"
+msgstr ""
+
+#: templates/admin/settings-page.php:38
+msgid "ePaper Viewer Settings"
+msgstr ""
+
+#: templates/archive-epaper.php:188
+msgid "ePaper archive navigation"
+msgstr ""
+
+#: includes/class-sk-epaper-renderer.php:563
+msgid "ePaper pages"
+msgstr ""
+
+#: includes/class-sk-epaper-renderer.php:308
+msgid "ePaper reader"
+msgstr ""
+
+#. translators: %s: ePaper edition title
+#: includes/class-sk-epaper-renderer.php:316
+msgid "ePaper: %s"
+msgstr ""
+
+#: includes/class-sk-epaper-cpt.php:27 includes/class-sk-epaper-cpt.php:29 templates/archive-epaper.php:21
+msgid "ePapers"
+msgstr ""
+
+#. translators: %s: Link to the Add New ePaper screen
+#: templates/admin/guide-page.php:73
+msgid "ePapers &rarr; Add New"
+msgstr ""
+
+#: templates/admin/settings-page.php:158
+msgid "ePapers Per Archive Page"
+msgstr ""
+
+#: includes/class-sk-epaper-renderer.php:348
+msgid "of"
+msgstr ""
+
+#: templates/admin/settings-page.php:194
+msgid "px"
+msgstr ""
