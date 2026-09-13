@@ -1,14 +1,31 @@
 # SK ePaper Manager
 
 [![WordPress Plugin](https://img.shields.io/badge/WordPress-Plugin-5850ec.svg)](https://wordpress.org/plugins/sk-epaper-manager/)
-[![Version](https://img.shields.io/badge/Version-1.2.0-blue.svg)](https://github.com/shrikantgaur/sk-epaper-manager)
-[![Tested Up To](https://img.shields.io/badge/WordPress-7.0-green.svg)](https://wordpress.org/plugins/sk-epaper-manager/)
+[![Version](https://img.shields.io/badge/Version-2.0.0-blue.svg)](https://github.com/shrikantgaur/sk-epaper-manager)
+[![Tested Up To](https://img.shields.io/badge/WordPress-7.1-green.svg)](https://wordpress.org/plugins/sk-epaper-manager/)
 [![PHP Requirement](https://img.shields.io/badge/PHP-7.4%2B-purple.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
 [![License](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
 
 **SK ePaper Manager** is a feature-rich, high-performance WordPress plugin that lets you upload, manage, and display digital newspapers, magazines, brochures, or newsletters using **images or PDF files**.
 
 Designed with modern aesthetics, fast AJAX reader engagement analytics, multi-city/language taxonomy management, shortcode builder, and custom brand color themes.
+
+---
+
+## 🎬 Live Demo
+
+Try the plugin in your browser - no install, no signup. It opens a throwaway
+WordPress site with sample editions already loaded.
+
+**[▶ Open the live demo](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/shrikantgaur/sk-epaper-manager/main/blueprints/blueprint-standalone.json)**
+
+The demo lands on the ePaper archive. From there you can use the filters, open
+an edition to try the reader, and look through the admin screens under
+**ePapers**. Nothing you do there affects anything: the site disappears when you
+close the tab.
+
+The same demo is available from the **Live Preview** button on the
+[WordPress.org plugin page](https://wordpress.org/plugins/sk-epaper-manager/).
 
 ---
 

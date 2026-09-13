@@ -18,6 +18,8 @@ Visitors can browse all ePapers in an archive view or open single editions to re
 
 Perfect for news portals, daily newspapers, schools, or local publications.
 
+**Try it first:** use the *Live Preview* button on this page to open a demo site with sample editions already loaded. Nothing is installed on your own site.
+
 == Features ==
 
 * Custom Post Type for ePapers
