@@ -24,6 +24,21 @@ $sk_filter_edition  = isset( $_GET['filter_edition'] ) ? sanitize_text_field( wp
 $sk_filter_language = isset( $_GET['filter_language'] ) ? sanitize_text_field( wp_unslash( $_GET['filter_language'] ) ) : '';
 // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 $sk_filter_search   = isset( $_GET['filter_search'] ) ? sanitize_text_field( wp_unslash( $_GET['filter_search'] ) ) : '';
+// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+$sk_filter_from     = isset( $_GET['filter_from'] ) ? sanitize_text_field( wp_unslash( $_GET['filter_from'] ) ) : '';
+// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+$sk_filter_to       = isset( $_GET['filter_to'] ) ? sanitize_text_field( wp_unslash( $_GET['filter_to'] ) ) : '';
+
+foreach ( array( 'sk_filter_from', 'sk_filter_to' ) as $sk_date_field ) {
+    if ( ! preg_match( '/^\d{4}-\d{2}-\d{2}$/', $$sk_date_field ) ) {
+        $$sk_date_field = '';
+    }
+}
+
+// A backwards range returns nothing and looks like a bug, so swap it.
+if ( $sk_filter_from && $sk_filter_to && $sk_filter_from > $sk_filter_to ) {
+    list( $sk_filter_from, $sk_filter_to ) = array( $sk_filter_to, $sk_filter_from );
+}
 
 // 1. High Performance SQL Aggregation for Top Metric Cards (0.001s Query Time)
 $sk_total_published = wp_count_posts( 'epaper' )->publish;
@@ -39,45 +54,18 @@ $sk_total_views = absint( $sk_total_views );
 
 $sk_avg_views = $sk_total_published > 0 ? round( $sk_total_views / $sk_total_published, 1 ) : 0;
 
-// 2. Build Query Args for Paginated Performance Table
-$sk_query_args = array(
-    'post_type'      => 'epaper',
-    'posts_per_page' => $sk_per_page,
-    'paged'          => $sk_current_page,
-    'post_status'    => 'publish',
-    // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-    'meta_key'       => SK_EPAPER_PREFIX . 'views',
-    'orderby'        => 'meta_value_num',
-    'order'          => 'DESC',
-    's'              => $sk_filter_search,
+// 2. Build Query Args for Paginated Performance Table (shared with the AJAX handler).
+$sk_query_args = sk_epaper_get_analytics_query_args(
+    array(
+        'paged'    => $sk_current_page,
+        'per_page' => $sk_per_page,
+        'edition'  => $sk_filter_edition,
+        'language' => $sk_filter_language,
+        'search'   => $sk_filter_search,
+        'from'     => $sk_filter_from,
+        'to'       => $sk_filter_to,
+    )
 );
-
-$sk_tax_query = array();
-
-if ( ! empty( $sk_filter_edition ) ) {
-    $sk_tax_query[] = array(
-        'taxonomy' => 'epaper_edition',
-        'field'    => 'slug',
-        'terms'    => $sk_filter_edition,
-    );
-}
-
-if ( ! empty( $sk_filter_language ) ) {
-    $sk_tax_query[] = array(
-        'taxonomy' => 'epaper_language',
-        'field'    => 'slug',
-        'terms'    => $sk_filter_language,
-    );
-}
-
-if ( count( $sk_tax_query ) > 1 ) {
-    $sk_tax_query['relation'] = 'AND';
-}
-
-if ( ! empty( $sk_tax_query ) ) {
-    // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
-    $sk_query_args['tax_query'] = $sk_tax_query;
-}
 
 $sk_analytics_query = new WP_Query( $sk_query_args );
 $sk_total_found     = $sk_analytics_query->found_posts;
@@ -187,12 +175,26 @@ $sk_all_languages = get_terms( array( 'taxonomy' => 'epaper_language', 'hide_emp
                     </div>
                 <?php endif; ?>
 
+                <div class="sk-filter-item sk-filter-dates">
+                    <label for="filter_from"><span class="dashicons dashicons-calendar-alt"></span>
+                        <?php esc_html_e( 'Edition Date Range', 'sk-epaper-manager' ); ?></label>
+                    <div class="sk-date-range">
+                        <input type="date" name="filter_from" id="filter_from"
+                            value="<?php echo esc_attr( $sk_filter_from ); ?>"
+                            aria-label="<?php esc_attr_e( 'From date', 'sk-epaper-manager' ); ?>">
+                        <span class="sk-date-sep" aria-hidden="true">&ndash;</span>
+                        <input type="date" name="filter_to" id="filter_to"
+                            value="<?php echo esc_attr( $sk_filter_to ); ?>"
+                            aria-label="<?php esc_attr_e( 'To date', 'sk-epaper-manager' ); ?>">
+                    </div>
+                </div>
+
                 <div class="sk-filter-actions">
                     <button type="submit" class="button button-primary">
                         <span class="dashicons dashicons-filter"></span>
                         <?php esc_html_e( 'Apply Filter', 'sk-epaper-manager' ); ?>
                     </button>
-                    <?php if ( ! empty( $sk_filter_edition ) || ! empty( $sk_filter_language ) || ! empty( $sk_filter_search ) ) : ?>
+                    <?php if ( ! empty( $sk_filter_edition ) || ! empty( $sk_filter_language ) || ! empty( $sk_filter_search ) || ! empty( $sk_filter_from ) || ! empty( $sk_filter_to ) ) : ?>
                         <a id="sk-reset-filters-btn" href="<?php echo esc_url( admin_url( 'edit.php?post_type=epaper&page=sk-epaper-analytics' ) ); ?>"
                             class="button button-secondary">
                             <?php esc_html_e( 'Reset Filters', 'sk-epaper-manager' ); ?>
@@ -242,12 +244,8 @@ $sk_all_languages = get_terms( array( 'taxonomy' => 'epaper_language', 'hide_emp
                             while ( $sk_analytics_query->have_posts() ) :
                                 $sk_analytics_query->the_post();
                                 $sk_epaper_id = get_the_ID();
-                                $sk_views     = absint( get_post_meta( $sk_epaper_id, SK_EPAPER_PREFIX . 'views', true ) );
-                                $sk_images    = get_post_meta( $sk_epaper_id, SK_EPAPER_PREFIX . 'images', true );
-                                if ( ! is_array( $sk_images ) ) {
-                                    $sk_images = array_filter( explode( ',', $sk_images ) );
-                                }
-                                $sk_pages_count = count( $sk_images );
+                                $sk_views       = SK_EPaper_Views::get( $sk_epaper_id );
+                                $sk_pages_count = count( SK_EPaper_Renderer::get_images( $sk_epaper_id ) );
 
                                 $sk_editions_terms  = get_the_terms( $sk_epaper_id, 'epaper_edition' );
                                 $sk_languages_terms = get_the_terms( $sk_epaper_id, 'epaper_language' );
@@ -277,7 +275,10 @@ $sk_all_languages = get_terms( array( 'taxonomy' => 'epaper_language', 'hide_emp
                                     <td><span class="sk-meta-tag"><span class="dashicons dashicons-translation"></span>
                                             <?php echo esc_html( $sk_language_names ); ?></span></td>
                                     <td style="text-align: center;"><span
-                                            class="badge-pill"><?php echo esc_html( $sk_pages_count ); ?> Pages</span></td>
+                                            class="badge-pill"><?php
+                                            /* translators: %d: Number of pages in the edition */
+                                            printf( esc_html( _n( '%d Page', '%d Pages', $sk_pages_count, 'sk-epaper-manager' ) ), esc_html( $sk_pages_count ) );
+                                        ?></span></td>
                                     <td style="text-align: center;"><strong
                                             class="sk-views-count"><?php echo esc_html( number_format( $sk_views ) ); ?></strong>
                                     </td>

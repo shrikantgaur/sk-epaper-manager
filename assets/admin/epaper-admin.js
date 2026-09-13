@@ -13,6 +13,35 @@ jQuery(function ($) {
     updatePageBadges();
   }
 
+  // Translated strings come from wp_localize_script; the English fallbacks keep
+  // the UI working if the handshake is ever missing.
+  const skStrings = (typeof sk_epaper_admin_ajax !== 'undefined' && sk_epaper_admin_ajax.i18n) ? sk_epaper_admin_ajax.i18n : {};
+
+  function skText(key, fallback) {
+    return skStrings[key] || fallback;
+  }
+
+  function skFormat(template, value) {
+    return String(template).replace(/%[ds]/, value);
+  }
+
+  // Best available preview for an attachment. PDFs carry generated sizes once
+  // the server can rasterise them, so prefer those over the generic file icon.
+  function skPreview(attrs) {
+    const sizes = attrs.sizes || {};
+    const pick = sizes.medium || sizes.medium_large || sizes.large || sizes.thumbnail || sizes.full;
+
+    if (pick && pick.url) {
+      return { url: pick.url, real: true };
+    }
+
+    if (attrs.type === 'image' && attrs.url) {
+      return { url: attrs.url, real: true };
+    }
+
+    return { url: attrs.icon || '', real: false };
+  }
+
   function updatePageBadges() {
     let index = 1;
     $('.sk-epaper-image-list li').each(function () {
@@ -20,12 +49,12 @@ jQuery(function ($) {
       if (!pill.length) {
         pill = $('<span class="sk-page-number-pill"></span>').prependTo($(this));
       }
-      pill.text('Page ' + index);
+      pill.text(skFormat(skText('page', 'Page %d'), index));
       index++;
     });
 
     const totalPages = index - 1;
-    $('.sk-page-counter-badge .count-text').text('Total Pages: ' + totalPages);
+    $('.sk-page-counter-badge .count-text').text(skFormat(skText('totalPages', 'Total Pages: %d'), totalPages));
   }
 
   // Initialize sortable drag-and-drop
@@ -45,8 +74,8 @@ jQuery(function ($) {
     e.preventDefault();
 
     const customUploader = wp.media({
-      title: 'Choose Images or PDF Files for ePaper Pages',
-      button: { text: 'Add to ePaper' },
+      title: skText('mediaTitle', 'Choose Images or PDF Files for ePaper Pages'),
+      button: { text: skText('mediaButton', 'Add to ePaper') },
       library: {
         type: ['image', 'application/pdf']
       },
@@ -77,30 +106,38 @@ jQuery(function ($) {
           return; // Reject invalid file
         }
 
-        const thumb = isImage
-          ? (attachment.attributes.sizes && attachment.attributes.sizes.medium ? attachment.attributes.sizes.medium.url : (attachment.attributes.sizes && attachment.attributes.sizes.thumbnail ? attachment.attributes.sizes.thumbnail.url : full))
-          : (attachment.attributes.icon || full);
+        const preview = skPreview(attachment.attributes);
+        const thumb = preview.url;
 
         if (!currentIDs.includes(id)) {
           currentIDs.push(id);
 
+          const dragLabel = skText('dragToReorder', 'Drag to reorder page');
+          const removeLabel = skText('removePage', 'Remove Page');
+          const removeText = skText('remove', 'Remove');
+          const pageLabel = skText('page', 'Page %d').replace(/\s*%[ds]\s*/, '');
+
+          const previewClass = preview.real ? '' : ' class="file-icon"';
+
           const itemHtml = isImage
             ? `<li data-id="${id}" class="is-image">
-                <span class="drag-handle" title="Drag to reorder page"><span class="dashicons dashicons-menu"></span></span>
-                <span class="sk-page-number-pill">Page</span>
+                <span class="drag-handle" title="${dragLabel}"><span class="dashicons dashicons-menu"></span></span>
+                <span class="sk-page-number-pill">${pageLabel}</span>
                 <div class="sk-card-preview-container">
                   <img src="${thumb}" alt="${title}" />
                 </div>
-                <span class="remove-image" title="Remove Page"><span class="text-remove-btn hidden">Remove</span></span>
+                <input type="text" class="sk-page-label-input" name="sk_epaper_page_labels[${id}]" value="" placeholder="${pageLabel}" />
+                <span class="remove-image" title="${removeLabel}"><span class="text-remove-btn hidden">${removeText}</span></span>
               </li>`
             : `<li data-id="${id}" class="is-file">
-                <span class="drag-handle" title="Drag to reorder page"><span class="dashicons dashicons-menu"></span></span>
-                <span class="sk-page-number-pill">Page</span>
+                <span class="drag-handle" title="${dragLabel}"><span class="dashicons dashicons-menu"></span></span>
+                <span class="sk-page-number-pill">${pageLabel}</span>
                 <div class="sk-card-preview-container">
-                  <img src="${thumb}" alt="${title}" class="file-icon" />
+                  <img src="${thumb}" alt="${title}"${previewClass} />
                 </div>
                 <span class="file-title">${title}</span>
-                <span class="remove-image" title="Remove Page"><span class="text-remove-btn hidden">Remove</span></span>
+                <input type="text" class="sk-page-label-input" name="sk_epaper_page_labels[${id}]" value="" placeholder="${pageLabel}" />
+                <span class="remove-image" title="${removeLabel}"><span class="text-remove-btn hidden">${removeText}</span></span>
               </li>`;
 
           imageList.append(itemHtml);
@@ -109,7 +146,11 @@ jQuery(function ($) {
 
       // Alert user if any wrong files were rejected
       if (invalidFiles.length > 0) {
-        alert('Invalid file format rejected: ' + invalidFiles.join(', ') + '\n\nPlease select only Image (JPG, PNG, WEBP) or PDF files for ePaper pages.');
+        alert(
+          skFormat(skText('invalidFiles', 'Invalid file format rejected: %s'), invalidFiles.join(', ')) +
+          '\n\n' +
+          skText('allowedFormats', 'Please select only Image (JPG, PNG, WEBP) or PDF files for ePaper pages.')
+        );
       }
 
       updateImageIDsInput();
@@ -139,11 +180,11 @@ jQuery(function ($) {
     const textToCopy = $(targetSelector).text().trim();
 
     function triggerCopySuccess() {
-      btn.addClass('is-copied').html('<span class="dashicons dashicons-yes-alt"></span> Copied!');
+      btn.addClass('is-copied').html('<span class="dashicons dashicons-yes-alt"></span> ' + skText('copied', 'Copied!'));
 
       let toast = $('#sk-copy-toast');
       if (!toast.length) {
-        toast = $('<div id="sk-copy-toast" class="sk-copy-toast-notice"><span class="dashicons dashicons-yes-alt"></span> Shortcode copied to clipboard!</div>').appendTo('body');
+        toast = $('<div id="sk-copy-toast" class="sk-copy-toast-notice"><span class="dashicons dashicons-yes-alt"></span> ' + skText('copiedToast', 'Shortcode copied to clipboard!') + '</div>').appendTo('body');
       }
       toast.stop(true, true).fadeIn(200).delay(1800).fadeOut(300);
 
@@ -236,7 +277,9 @@ jQuery(function ($) {
         paged: paged,
         filter_edition: $('#filter_edition').val() || '',
         filter_language: $('#filter_language').val() || '',
-        filter_search: $('#filter_search').val() || ''
+        filter_search: $('#filter_search').val() || '',
+        filter_from: $('#filter_from').val() || '',
+        filter_to: $('#filter_to').val() || ''
       };
 
       $.post(sk_epaper_admin_ajax.ajax_url, postData, function (response) {
