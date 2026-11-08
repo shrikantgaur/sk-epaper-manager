@@ -44,6 +44,10 @@
   background: #ffffff;
   border-radius: 6px !important;
   overflow: hidden;
+  /* clip, not hidden: hidden turns the wrapper into a scroll container, which
+     silently broke the sticky toolbar below. clip still trims the rounded
+     corners; browsers without clip support keep the hidden line above. */
+  overflow: clip;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
 }
 
@@ -1756,4 +1760,251 @@ a.epaper-tax-pill:focus-visible {
 
 #ui-datepicker-div td.ui-datepicker-today a {
     box-shadow: inset 0 0 0 1px #94a3b8;
+}
+
+/* ==========================================================================
+   Share bar (2.1)
+   Plain links and buttons with inline SVG icons - no third party assets.
+   ========================================================================== */
+
+.epaper-share-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-top: 1px solid #e5e7eb;
+  background: #ffffff;
+  position: relative;
+}
+
+.epaper-share-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  margin-right: 4px;
+}
+
+.epaper-share-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #f1f5f9;
+  color: #1e293b;
+  cursor: pointer;
+  text-decoration: none;
+  line-height: 1;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.epaper-share-btn[hidden] {
+  display: none;
+}
+
+.epaper-share-btn:hover {
+  filter: brightness(0.92);
+  transform: translateY(-1px);
+}
+
+.epaper-share-btn:focus-visible {
+  outline: 3px solid #2563eb;
+  outline-offset: 2px;
+}
+
+.epaper-share-btn .epaper-share-icon {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+.epaper-share-whatsapp {
+  background: #25d366;
+  color: #ffffff;
+}
+
+.epaper-share-facebook {
+  background: #1877f2;
+  color: #ffffff;
+}
+
+.epaper-share-x {
+  background: #000000;
+  color: #ffffff;
+}
+
+.epaper-share-whatsapp:hover,
+.epaper-share-facebook:hover,
+.epaper-share-x:hover,
+.epaper-share-whatsapp:focus,
+.epaper-share-facebook:focus,
+.epaper-share-x:focus {
+  color: #ffffff;
+}
+
+.epaper-share-status {
+  font-size: 13px;
+  color: #166534;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.epaper-share-status.is-visible {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .epaper-share-btn,
+  .epaper-share-status {
+    transition: none;
+  }
+
+  .epaper-share-btn:hover {
+    transform: none;
+  }
+}
+
+/* Toolbar Share button and its menu. The toolbar is sticky, so this is the
+   always-reachable way to share while reading. */
+.epaper-share-menu {
+  position: relative;
+  display: inline-flex;
+}
+
+/* .sk-control-button forces display with !important; keep [hidden] working. */
+.epaper-share-toggle[hidden],
+.epaper-share-popover[hidden] {
+  display: none !important;
+}
+
+.epaper-share-toggle .epaper-share-icon {
+  width: 18px;
+  height: 18px;
+  display: block;
+  color: #ffffff;
+}
+
+.epaper-share-toggle.is-open {
+  background: rgba(255, 255, 255, 0.22) !important;
+}
+
+.epaper-share-popover {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 30;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  /* Absolutely positioned inside a 34px wrapper: without this it shrinks to
+     that width and stacks the icons in a column. */
+  width: max-content;
+  max-width: calc(100vw - 32px);
+  padding: 10px;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.22);
+}
+
+.epaper-share-popover::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  right: 12px;
+  width: 12px;
+  height: 12px;
+  background: #ffffff;
+  transform: rotate(45deg);
+}
+
+.epaper-share-popover .epaper-share-status {
+  flex-basis: 100%;
+  text-align: center;
+}
+
+.epaper-share-popover .epaper-share-status:empty {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .epaper-share-toggle .epaper-share-icon {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Share button on edition cards. Sits above the card-wide link (z-index 6)
+   so tapping it never opens the edition; the menu opens upward over the
+   cover, inside the card, because the card clips its overflow. */
+.epaper-card-item.has-card-share .epaper-card-title {
+  padding-right: 44px;
+}
+
+.epaper-card-share {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  z-index: 7;
+}
+
+.epaper-card-share-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #e2e8f0;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #1e293b;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.epaper-card-share-toggle[hidden] {
+  display: none;
+}
+
+.epaper-card-share-toggle:hover,
+.epaper-card-share-toggle.is-open {
+  background: #f1f5f9;
+}
+
+.epaper-card-share-toggle:focus-visible {
+  outline: 3px solid #2563eb;
+  outline-offset: 2px;
+}
+
+.epaper-card-share-toggle .epaper-share-icon {
+  width: 17px;
+  height: 17px;
+  display: block;
+}
+
+.epaper-card-share-popover {
+  top: auto;
+  bottom: calc(100% + 10px);
+  right: 0;
+  max-width: calc(100vw - 48px);
+}
+
+.epaper-card-share-popover::before {
+  top: auto;
+  bottom: -6px;
+  right: 12px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .epaper-card-share-toggle {
+    transition: none;
+  }
 }

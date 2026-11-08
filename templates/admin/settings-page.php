@@ -28,6 +28,12 @@ $sk_epaper_header_bg         = SK_EPaper_Settings::get( 'header_bg' );
 $sk_epaper_primary_color     = SK_EPaper_Settings::get( 'primary_color' );
 $sk_epaper_delete_on_uninstall = SK_EPaper_Settings::get( 'delete_data_on_uninstall' );
 $sk_epaper_pdfjs_available   = SK_EPaper_Renderer::pdfjs_available();
+$sk_epaper_enable_share      = SK_EPaper_Settings::get( 'enable_share' );
+$sk_epaper_share_networks    = (array) SK_EPaper_Settings::get( 'share_networks' );
+$sk_epaper_output_og         = SK_EPaper_Settings::get( 'output_og' );
+$sk_epaper_share_position    = SK_EPaper_Share::get_position();
+$sk_epaper_share_on_cards    = SK_EPaper_Settings::get( 'share_on_cards' );
+$sk_epaper_seo_plugin        = SK_EPaper_Share::detect_seo_plugin();
 ?>
 
 <div class="wrap sk-epaper-admin-wrap">
@@ -223,6 +229,91 @@ $sk_epaper_pdfjs_available   = SK_EPaper_Renderer::pdfjs_available();
                         </label>
                         <p class="description">
                             <?php esc_html_e( 'The pages meta box works in both editors. Existing sites keep the classic editor unless you switch here.', 'sk-epaper-manager' ); ?>
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="sk-dashboard-card" id="sk-epaper-sharing">
+            <h2><span class="dashicons dashicons-share"></span>
+                <?php esc_html_e( 'Sharing', 'sk-epaper-manager' ); ?></h2>
+
+            <table class="form-table">
+                <tr>
+                    <th scope="row"><?php esc_html_e( 'Share Bar', 'sk-epaper-manager' ); ?></th>
+                    <td>
+                        <input type="hidden" name="sk_epaper_enable_share" value="0">
+                        <label>
+                            <input type="checkbox" name="sk_epaper_enable_share" value="1" <?php checked( $sk_epaper_enable_share, 1 ); ?>>
+                            <?php esc_html_e( 'Show share buttons under the reader', 'sk-epaper-manager' ); ?>
+                        </label>
+                        <p class="description">
+                            <?php esc_html_e( 'Readers share the page they are on, and the link opens the edition on that page. Plain links only: no scripts or trackers from any network are loaded.', 'sk-epaper-manager' ); ?>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><label for="sk_epaper_share_position"><?php esc_html_e( 'Position', 'sk-epaper-manager' ); ?></label></th>
+                    <td>
+                        <select name="sk_epaper_share_position" id="sk_epaper_share_position">
+                            <option value="both" <?php selected( $sk_epaper_share_position, 'both' ); ?>><?php esc_html_e( 'Toolbar button and below the reader', 'sk-epaper-manager' ); ?></option>
+                            <option value="toolbar" <?php selected( $sk_epaper_share_position, 'toolbar' ); ?>><?php esc_html_e( 'Toolbar button only', 'sk-epaper-manager' ); ?></option>
+                            <option value="bottom" <?php selected( $sk_epaper_share_position, 'bottom' ); ?>><?php esc_html_e( 'Below the reader only', 'sk-epaper-manager' ); ?></option>
+                        </select>
+                        <p class="description">
+                            <?php esc_html_e( 'The toolbar stays on screen while reading, so its Share button is always one tap away.', 'sk-epaper-manager' ); ?>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><?php esc_html_e( 'Edition Cards', 'sk-epaper-manager' ); ?></th>
+                    <td>
+                        <input type="hidden" name="sk_epaper_share_on_cards" value="0">
+                        <label>
+                            <input type="checkbox" name="sk_epaper_share_on_cards" value="1" <?php checked( $sk_epaper_share_on_cards, 1 ); ?>>
+                            <?php esc_html_e( 'Add a share button to edition cards on the archive and in "More Editions"', 'sk-epaper-manager' ); ?>
+                        </label>
+                        <p class="description">
+                            <?php esc_html_e( 'Shares the whole edition, so readers can pass on today\'s paper straight from the archive.', 'sk-epaper-manager' ); ?>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><?php esc_html_e( 'Networks', 'sk-epaper-manager' ); ?></th>
+                    <td>
+                        <fieldset>
+                            <legend class="screen-reader-text"><?php esc_html_e( 'Share networks', 'sk-epaper-manager' ); ?></legend>
+                            <input type="hidden" name="sk_epaper_share_networks[]" value="">
+                            <?php foreach ( SK_EPaper_Share::get_network_labels() as $sk_epaper_network => $sk_epaper_network_label ) : ?>
+                                <label style="display:block;margin-bottom:6px;">
+                                    <input type="checkbox" name="sk_epaper_share_networks[]" value="<?php echo esc_attr( $sk_epaper_network ); ?>" <?php checked( in_array( $sk_epaper_network, $sk_epaper_share_networks, true ) ); ?>>
+                                    <?php echo esc_html( $sk_epaper_network_label ); ?>
+                                </label>
+                            <?php endforeach; ?>
+                        </fieldset>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><?php esc_html_e( 'Open Graph Tags', 'sk-epaper-manager' ); ?></th>
+                    <td>
+                        <input type="hidden" name="sk_epaper_output_og" value="0">
+                        <label>
+                            <input type="checkbox" name="sk_epaper_output_og" value="1" <?php checked( $sk_epaper_output_og, 1 ); ?>>
+                            <?php esc_html_e( 'Add Open Graph tags to editions, so shared links show a page preview', 'sk-epaper-manager' ); ?>
+                        </label>
+                        <p class="description">
+                            <?php if ( $sk_epaper_seo_plugin ) : ?>
+                                <?php
+                                printf(
+                                    /* translators: %s: Name of the active SEO plugin */
+                                    esc_html__( 'Currently skipped: %s is active and adds its own Open Graph tags.', 'sk-epaper-manager' ),
+                                    esc_html( $sk_epaper_seo_plugin )
+                                );
+                                ?>
+                            <?php else : ?>
+                                <?php esc_html_e( 'Skipped automatically when Yoast SEO, Rank Math, All in One SEO, SEOPress, The SEO Framework or Jetpack adds its own tags.', 'sk-epaper-manager' ); ?>
+                            <?php endif; ?>
                         </p>
                     </td>
                 </tr>

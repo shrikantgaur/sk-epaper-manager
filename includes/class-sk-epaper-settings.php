@@ -43,6 +43,13 @@ class SK_EPaper_Settings {
         'sk_epaper_use_block_editor'  => 0,
         // Deleting a plugin is a troubleshooting step; never destroy data by default.
         'sk_epaper_delete_data_on_uninstall' => 0,
+        // Off unless stored: new installs get 1 on activation, sites upgrading
+        // from 2.0.x get 0 plus a notice (SK_EPaper_Share::maybe_set_defaults()).
+        'sk_epaper_enable_share'      => 0,
+        'sk_epaper_share_networks'    => array( 'whatsapp', 'facebook', 'x', 'copy', 'native' ),
+        'sk_epaper_output_og'         => 1,
+        'sk_epaper_share_position'    => 'both',
+        'sk_epaper_share_on_cards'    => 1,
     );
 
     /**
@@ -103,6 +110,11 @@ class SK_EPaper_Settings {
             'sk_epaper_header_bg'        => array( 'string', array( __CLASS__, 'sanitize_color' ) ),
             'sk_epaper_primary_color'    => array( 'string', array( __CLASS__, 'sanitize_color' ) ),
             'sk_epaper_pdf_mode'         => array( 'string', array( __CLASS__, 'sanitize_pdf_mode' ) ),
+            'sk_epaper_enable_share'     => array( 'boolean', array( __CLASS__, 'sanitize_checkbox' ) ),
+            'sk_epaper_share_networks'   => array( 'array', array( __CLASS__, 'sanitize_share_networks' ) ),
+            'sk_epaper_output_og'        => array( 'boolean', array( __CLASS__, 'sanitize_checkbox' ) ),
+            'sk_epaper_share_position'   => array( 'string', array( __CLASS__, 'sanitize_share_position' ) ),
+            'sk_epaper_share_on_cards'   => array( 'boolean', array( __CLASS__, 'sanitize_checkbox' ) ),
         );
 
         foreach ( $schema as $name => $config ) {
@@ -212,6 +224,37 @@ class SK_EPaper_Settings {
         $value = sanitize_key( $value );
 
         return in_array( $value, array( 'iframe', 'image', 'pdfjs' ), true ) ? $value : 'iframe';
+    }
+
+    /**
+     * Share networks: only known keys, in the canonical order.
+     *
+     * Unchecking every box posts nothing (or just the hidden empty marker), which
+     * correctly stores an empty list.
+     *
+     * @param mixed $value Raw value.
+     * @return array
+     */
+    public static function sanitize_share_networks( $value ) {
+        if ( ! is_array( $value ) ) {
+            return array();
+        }
+
+        $value = array_map( 'sanitize_key', $value );
+
+        return array_values( array_intersect( SK_EPaper_Share::get_network_keys(), $value ) );
+    }
+
+    /**
+     * Where the share controls appear.
+     *
+     * @param mixed $value Raw value.
+     * @return string
+     */
+    public static function sanitize_share_position( $value ) {
+        $value = sanitize_key( $value );
+
+        return in_array( $value, array( 'bottom', 'toolbar', 'both' ), true ) ? $value : 'both';
     }
 
     /**

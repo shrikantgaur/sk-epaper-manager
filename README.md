@@ -1,7 +1,7 @@
 # SK ePaper Manager
 
 [![WordPress Plugin](https://img.shields.io/badge/WordPress-Plugin-5850ec.svg)](https://wordpress.org/plugins/sk-epaper-manager/)
-[![Version](https://img.shields.io/badge/Version-2.0.0-blue.svg)](https://github.com/shrikantgaur/sk-epaper-manager)
+[![Version](https://img.shields.io/badge/Version-2.1.0-blue.svg)](https://github.com/shrikantgaur/sk-epaper-manager)
 [![Tested Up To](https://img.shields.io/badge/WordPress-7.1-green.svg)](https://wordpress.org/plugins/sk-epaper-manager/)
 [![PHP Requirement](https://img.shields.io/badge/PHP-7.4%2B-purple.svg)](https://www.php.net/)
 [![License](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
@@ -165,6 +165,30 @@ automatically. Two things change visibly:
 ---
 
 ## 📝 Changelog
+
+### 2.1.0
+**Sharing**
+* Share buttons for WhatsApp, Facebook, X, copy link and the device share sheet, in the reader toolbar, under the reader and on archive cards.
+* Plain links with inline SVG icons: no third-party scripts, SDKs or tracking.
+* On for new installs; off on sites updating from 2.0 until an administrator enables it from a one-time notice or Settings.
+
+**Page links**
+* Every page has its own URL: `/epapers/{edition}/p/5/`, or `?epage=5` without pretty permalinks.
+* The reader opens on the linked page and keeps the address bar in step with `history.replaceState`. Works behind full page caching.
+
+**Link previews**
+* Open Graph tags on single editions, using the shared page as the preview image. Skipped when Yoast SEO, Rank Math, AIOSEO, SEOPress, The SEO Framework or Jetpack outputs its own.
+
+**Admin**
+* "Request a Feature" menu link and an "Early Access to Pro" card on Getting Started.
+* A one-time, dismissible feedback prompt after a week of real use.
+
+**Fixes**
+* The reader toolbar now actually stays pinned while scrolling.
+
+**Developers**
+* Filters: `sk_epaper_show_review_notice`, `sk_epaper_feature_request_url`, `sk_epaper_early_access_url`, `sk_epaper_output_og_tags`.
+* Constants: `SK_EPAPER_FEATURE_REQUEST_URL`, `SK_EPAPER_EARLY_ACCESS_URL`.
 
 ### 2.0.0
 **Performance**

@@ -1156,3 +1156,103 @@
     padding-bottom: 4px;
   }
 }
+
+/* ==========================================================================
+   Review / feedback notice
+   ========================================================================== */
+
+.sk-epaper-review-notice {
+  border-left-color: #5850ec;
+}
+
+.sk-epaper-review-notice .sk-review-notice-title {
+  margin: 0.75em 0 0.25em;
+  font-size: 14px;
+}
+
+.sk-epaper-review-notice .sk-review-notice-text {
+  margin-top: 0;
+}
+
+.sk-epaper-review-notice .sk-review-notice-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+
+.sk-epaper-review-notice .sk-review-secondary {
+  text-decoration: underline;
+}
+
+.sk-epaper-review-notice .button:focus,
+.sk-epaper-review-notice .sk-review-secondary:focus,
+.sk-epaper-review-notice .sk-review-notice-thanks a:focus {
+  outline: 2px solid #5850ec;
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+.sk-epaper-review-notice [data-sk-thanks]:focus {
+  outline: none;
+}
+
+.sk-epaper-review-notice.sk-review-is-busy {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   Request a Feature / Early Access
+   ========================================================================== */
+
+#adminmenu .sk-menu-external {
+  font-size: 14px;
+  width: 14px;
+  height: 14px;
+  vertical-align: text-bottom;
+  opacity: 0.7;
+}
+
+.sk-early-access-card {
+  border-top: 3px solid #5850ec;
+}
+
+.sk-feedback-card .button .dashicons {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+.sk-feedback-card .button:focus {
+  outline: 2px solid #5850ec;
+  outline-offset: 2px;
+}
+
+.sk-epaper-share-notice {
+  border-left-color: #5850ec;
+}
+
+.sk-epaper-share-notice .sk-review-notice-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+
+.sk-epaper-share-notice .button:focus,
+.sk-epaper-share-notice .sk-review-secondary:focus,
+.sk-epaper-share-notice .sk-share-notice-done a:focus {
+  outline: 2px solid #5850ec;
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+.sk-epaper-share-notice .sk-share-notice-done:focus {
+  outline: none;
+}
+
+.sk-epaper-share-notice.sk-review-is-busy {
+  opacity: 0.6;
+  pointer-events: none;
+}

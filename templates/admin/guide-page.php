@@ -193,6 +193,47 @@ $sk_epaper_notice = isset( $_GET['sk_demo_notice'] ) ? sanitize_text_field( wp_u
                 </p>
             </div>
 
+            <div class="sk-dashboard-card sk-feedback-card">
+                <h2><span class="dashicons dashicons-lightbulb"></span>
+                    <?php esc_html_e( 'Request a Feature', 'sk-epaper-manager' ); ?></h2>
+
+                <p><?php esc_html_e( 'Missing something your newsroom needs? Tell us what would make your ePaper workflow easier. Every request is read, and the most asked-for ideas get built first.', 'sk-epaper-manager' ); ?></p>
+
+                <p>
+                    <a class="button" href="<?php echo esc_url( SK_EPaper_Feedback::get_url( 'feature_request' ) ); ?>" target="_blank" rel="noopener noreferrer">
+                        <span class="dashicons dashicons-external" aria-hidden="true"></span>
+                        <?php esc_html_e( 'Request a Feature', 'sk-epaper-manager' ); ?>
+                        <span class="screen-reader-text"><?php esc_html_e( '(opens in a new tab)', 'sk-epaper-manager' ); ?></span>
+                    </a>
+                </p>
+            </div>
+
+            <div class="sk-dashboard-card sk-feedback-card sk-early-access-card">
+                <h2><span class="dashicons dashicons-star-filled"></span>
+                    <?php esc_html_e( 'Early Access to Pro', 'sk-epaper-manager' ); ?></h2>
+
+                <p><?php esc_html_e( 'A Pro add-on is in the works. Join the early access list to try it first and help shape what goes in:', 'sk-epaper-manager' ); ?></p>
+
+                <ul class="sk-guide-list">
+                    <li><?php esc_html_e( 'Paywall and reader subscriptions', 'sk-epaper-manager' ); ?></li>
+                    <li><?php esc_html_e( 'Article clipping: readers crop and share a single story', 'sk-epaper-manager' ); ?></li>
+                    <li><?php esc_html_e( 'Multi-station manager for groups running several publications', 'sk-epaper-manager' ); ?></li>
+                    <li><?php esc_html_e( 'Bulk PDF upload: a whole edition in one go', 'sk-epaper-manager' ); ?></li>
+                </ul>
+
+                <p>
+                    <a class="button button-primary" href="<?php echo esc_url( SK_EPaper_Feedback::get_url( 'early_access' ) ); ?>" target="_blank" rel="noopener noreferrer">
+                        <span class="dashicons dashicons-external" aria-hidden="true"></span>
+                        <?php esc_html_e( 'Join Early Access', 'sk-epaper-manager' ); ?>
+                        <span class="screen-reader-text"><?php esc_html_e( '(opens in a new tab)', 'sk-epaper-manager' ); ?></span>
+                    </a>
+                </p>
+
+                <p class="description">
+                    <?php esc_html_e( 'Opens a sign-up form on an external site. The plugin itself never sends any data.', 'sk-epaper-manager' ); ?>
+                </p>
+            </div>
+
             <div class="sk-dashboard-card">
                 <h2><span class="dashicons dashicons-admin-settings"></span>
                     <?php esc_html_e( 'Worth setting up', 'sk-epaper-manager' ); ?></h2>

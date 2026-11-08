@@ -4,7 +4,7 @@ Tags: epaper, pdf, newspaper, magazine, shortcode
 Requires at least: 5.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.0.0
+Stable tag: 2.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -18,7 +18,7 @@ Visitors can browse all ePapers in an archive view or open single editions to re
 
 Perfect for news portals, daily newspapers, schools, or local publications.
 
-**Try it first:** use the *Live Preview* button on this page to open a demo site with sample editions already loaded. Nothing is installed on your own site.
+**Try it first:** [open the live demo](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/shrikantgaur/sk-epaper-manager/main/blueprints/blueprint-standalone.json) - a throwaway WordPress site in your browser with sample editions already loaded. No install, no signup, and nothing touches your own site.
 
 == Features ==
 
@@ -29,6 +29,8 @@ Perfect for news portals, daily newspapers, schools, or local publications.
 * Pages load as the reader moves through them, so a long edition opens quickly
 * Archive filters: search, Edition, Language, month and exact edition date
 * A "More Editions" row under every edition
+* Share buttons for WhatsApp, Facebook, X and copy link, plus the phone's own share menu, in the toolbar, under the reader and on archive cards
+* Page links: share or bookmark one page of an edition, e.g. `/epapers/todays-edition/p/5/`
 * Accessible controls, live page counter and reduced-motion support
 
 **For you**
@@ -44,6 +46,8 @@ Perfect for news portals, daily newspapers, schools, or local publications.
 **Built to last**
 
 * View counting keeps working behind full page caching
+* No tracking and no third-party scripts: share buttons are plain links
+* Open Graph tags for link previews, switched off automatically when an SEO plugin already adds them
 * Templates can be overridden from your theme
 * Uninstall removes nothing unless you ask it to
 
@@ -60,9 +64,23 @@ Perfect for news portals, daily newspapers, schools, or local publications.
 
 == Frequently Asked Questions ==
 
+= Can readers share a single page? =
+
+Yes. Turn on the share bar under **ePapers > Settings > Sharing**. Readers can share the page they are on to WhatsApp, Facebook or X, copy the link, or use their phone's share menu. Choose whether the buttons appear in the reader toolbar, under the reader, or both. Edition cards in the archive get a share button too, for sharing a whole edition.
+
+Every shared link opens the edition on that page: `/epapers/{edition}/p/5/` (or `?epage=5` on sites without pretty permalinks). As readers turn pages, the address bar follows along, so a bookmark or a copied URL also points to the right page.
+
+= Does the plugin send any data anywhere? =
+
+No. Share buttons are ordinary links: nothing from WhatsApp, Facebook or X loads until a reader clicks one. The "Request a Feature" and "Early Access" links in the admin simply open a web page; the plugin itself never sends anything.
+
+= I use Yoast SEO / Rank Math. Will I get duplicate Open Graph tags? =
+
+No. The plugin skips its own Open Graph tags when Yoast SEO, Rank Math, All in One SEO, SEOPress, The SEO Framework or Jetpack is adding them. You can also switch them off under Settings > Sharing.
+
 = Can I try it before installing? =
 
-Yes. Use the *Live Preview* button on this page: it opens a temporary WordPress site with sample editions already loaded, and disappears when you close the tab.
+Yes. [Open the live demo](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/shrikantgaur/sk-epaper-manager/main/blueprints/blueprint-standalone.json) (or use the *Live Preview* button on this page). It opens a temporary WordPress site with sample editions already loaded, and disappears when you close the tab.
 
 Once installed, **ePapers > Getting Started** can create the same sample editions on your own site, and remove them again in one click.
 
@@ -149,6 +167,35 @@ No. Editions, settings, permalinks and shortcodes are unchanged and upgrade auto
 13. Admin: Settings - brand colour, content width, thumbnail position and uninstall behaviour.
 
 == Changelog ==
+
+= 2.1.0 =
+**Sharing**
+* Added share buttons for WhatsApp, Facebook, X and copy link, plus the device share menu on phones. Readers share the exact page they are on.
+* Added a Share button in the reader toolbar, alongside the bar under the reader. Choose toolbar, below, or both under Settings > Sharing.
+* Added a share button on edition cards in the archive and the "More Editions" row, so readers can pass on a whole edition without opening it. Can be switched off under Settings > Sharing.
+* Share buttons are plain links with inline icons. No third-party scripts, SDKs or tracking are loaded.
+* New installs start with sharing on. Sites updating from 2.0 keep it off until an administrator turns it on, using a one-time notice or the setting.
+
+**Page links**
+* Every page of an edition has its own link: `/epapers/{edition}/p/5/`, or `?epage=5` without pretty permalinks.
+* The reader opens on the linked page, and the address bar follows as pages are turned, without adding browser history entries.
+* Out-of-range page numbers open the nearest valid page instead of breaking.
+* Page links keep working on sites with full page caching.
+
+**Link previews**
+* Added Open Graph tags on single editions, so shared links show the shared page as the preview image. Skipped automatically when Yoast SEO, Rank Math, All in One SEO, SEOPress, The SEO Framework or Jetpack adds its own. The canonical URL stays the edition's main permalink.
+
+**Admin**
+* Added a "Request a Feature" link in the ePapers menu and on the Getting Started screen.
+* Added an "Early Access to Pro" card on the Getting Started screen.
+* Added a one-time, dismissible prompt asking for feedback, shown only after the plugin has been in use for a week. It can be snoozed or dismissed for good.
+
+**Fixes**
+* The reader toolbar now stays at the top of the screen while scrolling through a long page, as intended in 2.0.
+
+**Developers**
+* New filters: `sk_epaper_show_review_notice`, `sk_epaper_feature_request_url`, `sk_epaper_early_access_url`, `sk_epaper_output_og_tags`.
+* New constants: `SK_EPAPER_FEATURE_REQUEST_URL`, `SK_EPAPER_EARLY_ACCESS_URL`.
 
 = 2.0.0 =
 **Performance**
@@ -263,6 +310,9 @@ This plugin is licensed under the GPLv2 or later.
 See [https://www.gnu.org/licenses/gpl-2.0.html](https://www.gnu.org/licenses/gpl-2.0.html)
 
 == Upgrade Notice ==
+
+= 2.1.0 =
+Adds share buttons and links to individual pages. Sharing stays off on existing sites until you turn it on, so nothing changes on your public pages. Editions, settings, shortcodes and URLs are unchanged.
 
 = 2.0.0 =
 Major release: rebuilt internals, archive filters, blocks and a faster reader. Editions, settings, permalinks and shortcodes are unchanged and upgrade automatically. Expect two changes: view counts now exclude bots and repeats, and the archive is paginated.

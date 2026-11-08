@@ -331,6 +331,16 @@ jQuery(function ($) {
     });
   }
 
+  // "Request a Feature" menu item: point it straight at the external form and
+  // open it in a new tab. Without JavaScript the admin page redirects instead.
+  if (typeof sk_epaper_admin_ajax !== 'undefined' && sk_epaper_admin_ajax.feature_request_url && sk_epaper_admin_ajax.feature_request_page) {
+    $('#adminmenu a[href$="page=' + sk_epaper_admin_ajax.feature_request_page + '"]').attr({
+      href: sk_epaper_admin_ajax.feature_request_url,
+      target: '_blank',
+      rel: 'noopener noreferrer'
+    });
+  }
+
   // Initialize badges on load
   updatePageBadges();
 });

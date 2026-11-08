@@ -4,7 +4,7 @@ Plugin Name: SK ePaper Manager
 Text Domain: sk-epaper-manager
 Domain Path: /languages
 Description: SK ePaper Manager lets you upload, manage, and display beautiful ePapers on your WordPress site.
-Version: 2.0.0
+Version: 2.1.0
 Author: Shri Kant Gaur
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -21,7 +21,7 @@ if ( ! defined( 'SK_EPAPER_PREFIX' ) ) {
 }
 
 if ( ! defined( 'SK_EPAPER_VERSION' ) ) {
-    define( 'SK_EPAPER_VERSION', '2.0.0' );
+    define( 'SK_EPAPER_VERSION', '2.1.0' );
 }
 
 /*
@@ -31,6 +31,20 @@ if ( ! defined( 'SK_EPAPER_VERSION' ) ) {
  */
 if ( ! defined( 'SK_EPAPER_DB_VERSION' ) ) {
     define( 'SK_EPAPER_DB_VERSION', '1.3.0' );
+}
+
+/*
+ * Where "Request a Feature" and "Early Access to Pro" point. Define either in
+ * wp-config.php to override, or use the sk_epaper_feature_request_url /
+ * sk_epaper_early_access_url filters. The plugin only links to these; it never
+ * sends anything to them.
+ */
+if ( ! defined( 'SK_EPAPER_FEATURE_REQUEST_URL' ) ) {
+    define( 'SK_EPAPER_FEATURE_REQUEST_URL', 'https://wordpress.org/support/plugin/sk-epaper-manager/' );
+}
+
+if ( ! defined( 'SK_EPAPER_EARLY_ACCESS_URL' ) ) {
+    define( 'SK_EPAPER_EARLY_ACCESS_URL', 'https://docs.google.com/forms/d/e/1FAIpQLScmYQu2_Q_5mc7QwuWCj4uB-eUxQHyIl4wY5Ry8rFmu14alsQ/viewform' );
 }
 
 define( 'SK_EPAPER_FILE', __FILE__ );
@@ -45,6 +59,8 @@ require_once SK_EPAPER_PATH . 'includes/class-sk-epaper-renderer.php';
 require_once SK_EPAPER_PATH . 'includes/class-sk-epaper-admin.php';
 require_once SK_EPAPER_PATH . 'includes/class-sk-epaper-blocks.php';
 require_once SK_EPAPER_PATH . 'includes/class-sk-epaper-demo.php';
+require_once SK_EPAPER_PATH . 'includes/class-sk-epaper-feedback.php';
+require_once SK_EPAPER_PATH . 'includes/class-sk-epaper-share.php';
 require_once SK_EPAPER_PATH . 'includes/functions-compat.php';
 
 /*
@@ -95,6 +111,24 @@ add_action( 'deleted_post', array( 'SK_EPaper_CPT', 'flush_month_cache' ) );
 add_action( 'rest_api_init', array( 'SK_EPaper_Views', 'register_rest_routes' ) );
 add_action( 'wp_ajax_sk_epaper_view_pixel', array( 'SK_EPaper_Views', 'handle_pixel' ) );
 add_action( 'wp_ajax_nopriv_sk_epaper_view_pixel', array( 'SK_EPaper_Views', 'handle_pixel' ) );
+
+// Review / feedback notice.
+add_action( 'admin_init', array( 'SK_EPaper_Feedback', 'maybe_set_install_time' ) );
+add_action( 'admin_init', array( 'SK_EPaper_Feedback', 'handle_fallback' ) );
+add_action( 'admin_enqueue_scripts', array( 'SK_EPaper_Feedback', 'enqueue_assets' ) );
+add_action( 'admin_notices', array( 'SK_EPaper_Feedback', 'render_notice' ) );
+add_action( 'wp_ajax_sk_epaper_review_notice', array( 'SK_EPaper_Feedback', 'ajax_handle_choice' ) );
+
+// Page deep links, share bar and Open Graph.
+add_action( 'init', array( 'SK_EPaper_Share', 'add_rewrite_rule' ) );
+add_filter( 'query_vars', array( 'SK_EPaper_Share', 'register_query_var' ) );
+add_action( 'wp_head', array( 'SK_EPaper_Share', 'output_og_tags' ), 5 );
+add_action( 'admin_init', array( 'SK_EPaper_Share', 'maybe_set_defaults' ), 5 );
+add_action( 'admin_init', array( 'SK_EPaper_Share', 'handle_notice_fallback' ) );
+add_action( 'admin_enqueue_scripts', array( 'SK_EPaper_Share', 'enqueue_notice_assets' ) );
+add_action( 'admin_notices', array( 'SK_EPaper_Share', 'render_notice' ) );
+add_action( 'wp_ajax_sk_epaper_share_notice', array( 'SK_EPaper_Share', 'ajax_notice_choice' ) );
+add_filter( 'sk_epaper_show_review_notice', array( 'SK_EPaper_Share', 'suppress_review_notice' ) );
 
 // Data migrations.
 add_action( 'admin_init', array( 'SK_EPaper_Migrations', 'maybe_upgrade' ) );

@@ -225,6 +225,7 @@ class SK_EPaper_Renderer {
         );
 
         SK_EPaper_Views::localize( SK_EPAPER_PREFIX . 'script' );
+        SK_EPaper_Share::localize( SK_EPAPER_PREFIX . 'script' );
 
         /*
          * The archive date filter greys out days with no edition. A native
@@ -313,12 +314,31 @@ class SK_EPaper_Renderer {
         $total           = count( $images );
         $title           = get_the_title( $post_id );
 
+        /*
+         * Deep link: /p/N/ or ?epage=N on the edition's own page opens the
+         * reader on that page. Clamped, so a stale link to page 30 of a 12 page
+         * edition opens on page 12 instead of breaking. Embeds always start on 1.
+         */
+        $start_page = 1;
+        $requested  = SK_EPaper_Share::get_requested_page( $post_id );
+
+        if ( $requested > 0 && $total > 0 ) {
+            $start_page = min( $requested, $total );
+        }
+
+        $start_index = $start_page - 1;
+        $deep_link   = SK_EPaper_Share::is_main_viewer( $post_id ) && 'publish' === get_post_status( $post_id );
+
         ob_start();
         ?>
         <div class="epaper-wrapper wrapper" data-epaper-id="<?php echo esc_attr( $post_id ); ?>"
             data-lazy="<?php echo SK_EPaper_Settings::get( 'lazy_load' ) ? '1' : '0'; ?>"
             data-pdf-mode="<?php echo esc_attr( self::get_pdf_mode() ); ?>"
             data-thumb-position="<?php echo esc_attr( $thumb_position ); ?>"
+            data-start-page="<?php echo esc_attr( $start_page ); ?>"
+            data-page-url="<?php echo esc_url( get_permalink( $post_id ) ); ?>"
+            data-page-url-template="<?php echo esc_url( SK_EPaper_Share::get_page_url_template( $post_id ) ); ?>"
+            data-deeplink="<?php echo $deep_link ? '1' : '0'; ?>"
             role="region"
             aria-roledescription="<?php esc_attr_e( 'ePaper reader', 'sk-epaper-manager' ); ?>"
             aria-label="<?php echo esc_attr( $title ); ?>">
@@ -354,12 +374,17 @@ class SK_EPaper_Renderer {
                                         <span class="dashicons dashicons-download" aria-hidden="true"></span>
                                     </a>
                                 <?php endif; ?>
+                                <?php
+                                if ( $total > 0 ) {
+                                    echo SK_EPaper_Share::render_toolbar_button( $post_id, $start_page ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in render_toolbar_button().
+                                }
+                                ?>
                             </div>
                         </div>
                         <div class="epaper-right">
                             <span class="page-count" aria-live="polite" aria-atomic="true">
                                 <?php esc_html_e( 'Page:', 'sk-epaper-manager' ); ?>
-                                <span class="current-page">1</span>
+                                <span class="current-page"><?php echo esc_html( $start_page ); ?></span>
                                 <?php esc_html_e( 'of', 'sk-epaper-manager' ); ?>
                                 <span class="total-page"><?php echo esc_html( $total ); ?></span>
                             </span>
@@ -376,8 +401,8 @@ class SK_EPaper_Renderer {
                             <button type="button" class="arrow left-arrow" id="prev" aria-label="<?php esc_attr_e( 'Previous page', 'sk-epaper-manager' ); ?>">
                                 <span class="dashicons dashicons-arrow-left-alt2" aria-hidden="true"></span>
                             </button>
-                            <div class="image-slider">
-                                <?php echo self::render_slides( $images ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                            <div class="image-slider"<?php echo $start_index > 0 ? ' style="transform: translateX(-' . absint( $start_index * 100 ) . '%);"' : ''; ?>>
+                                <?php echo self::render_slides( $images, $start_index ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
                             </div>
                             <button type="button" class="arrow right-arrow" id="next" aria-label="<?php esc_attr_e( 'Next page', 'sk-epaper-manager' ); ?>">
                                 <span class="dashicons dashicons-arrow-right-alt2" aria-hidden="true"></span>
@@ -388,9 +413,15 @@ class SK_EPaper_Renderer {
             </div>
 
             <?php if ( $show_thumbs ) : ?>
-                <?php echo self::render_thumbnails( $images, $post_id, $thumb_position ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                <?php echo self::render_thumbnails( $images, $post_id, $thumb_position, $start_index ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
             <?php endif; ?>
             </div>
+
+            <?php
+            if ( $total > 0 ) {
+                echo SK_EPaper_Share::render_bar( $post_id, $start_page ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in render_bar().
+            }
+            ?>
         </div>
         <?php
         echo SK_EPaper_Views::get_noscript_pixel( $post_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -437,10 +468,14 @@ class SK_EPaper_Renderer {
      * swapped in by the viewer script as the reader approaches them. A 24 page
      * edition used to push every full size image down the wire on first paint.
      *
+     * The page a deep link opens on is the one loaded eagerly; with no deep
+     * link that is page 1, exactly as before.
+     *
      * @param array $images Attachment IDs.
+     * @param int   $start  Zero based index of the page the reader opens on.
      * @return string HTML markup (already escaped).
      */
-    protected static function render_slides( $images ) {
+    protected static function render_slides( $images, $start = 0 ) {
         if ( empty( $images ) ) {
             return '';
         }
@@ -465,7 +500,7 @@ class SK_EPaper_Renderer {
             }
 
             $render_as_image = ! empty( $src[0] );
-            $defer           = $lazy && $index > 0;
+            $defer           = $lazy && $index !== $start;
 
             $html .= '<div class="image-slide" data-index="' . esc_attr( $index ) . '"'
                 . ' data-download-url="' . esc_url( $file_url ) . '"'
@@ -475,7 +510,7 @@ class SK_EPaper_Renderer {
             $html .= '<div class="zoom-container">';
 
             if ( $render_as_image ) {
-                $html .= self::render_page_image( $attachment_id, $src, $defer, $index );
+                $html .= self::render_page_image( $attachment_id, $src, $defer, $index, $start );
             } elseif ( 'pdfjs' === $pdf_mode ) {
                 $html .= '<div class="epaper-pdf-canvas" data-pdf-url="' . esc_url( $file_url ) . '"></div>';
             } else {
@@ -501,9 +536,10 @@ class SK_EPaper_Renderer {
      * @param array $src           Result of wp_get_attachment_image_src().
      * @param bool  $defer         Whether to defer loading.
      * @param int   $index         Zero based page index.
+     * @param int   $start         Zero based index of the page the reader opens on.
      * @return string
      */
-    protected static function render_page_image( $attachment_id, $src, $defer, $index ) {
+    protected static function render_page_image( $attachment_id, $src, $defer, $index, $start = 0 ) {
         list( $url, $width, $height ) = array( $src[0], isset( $src[1] ) ? $src[1] : 0, isset( $src[2] ) ? $src[2] : 0 );
 
         $srcset = wp_get_attachment_image_srcset( $attachment_id, 'full' );
@@ -544,7 +580,7 @@ class SK_EPaper_Renderer {
             if ( $sizes ) {
                 $attrs['sizes'] = $sizes;
             }
-            if ( $index > 0 ) {
+            if ( $index !== $start ) {
                 $attrs['loading'] = 'lazy';
             }
         }
@@ -566,9 +602,10 @@ class SK_EPaper_Renderer {
      * @param array  $images   Attachment IDs.
      * @param int    $post_id  ePaper post ID.
      * @param string $position bottom|left|right.
+     * @param int    $active   Zero based index of the page the reader opens on.
      * @return string
      */
-    protected static function render_thumbnails( $images, $post_id, $position = 'bottom' ) {
+    protected static function render_thumbnails( $images, $post_id, $position = 'bottom', $active = 0 ) {
         $labels   = self::get_page_labels( $post_id );
         $vertical = in_array( $position, array( 'left', 'right' ), true );
 
@@ -593,10 +630,10 @@ class SK_EPaper_Renderer {
             }
 
             $html .= '<li class="epaper-thumb-item">';
-            $html .= '<button type="button" class="epaper-thumb-btn' . ( 0 === $index ? ' is-active' : '' ) . '"'
+            $html .= '<button type="button" class="epaper-thumb-btn' . ( $active === $index ? ' is-active' : '' ) . '"'
                 . ' data-index="' . esc_attr( $index ) . '"'
                 . ' aria-label="' . esc_attr( $aria ) . '"'
-                . ( 0 === $index ? ' aria-current="true"' : '' ) . '>';
+                . ( $active === $index ? ' aria-current="true"' : '' ) . '>';
 
             $html .= '<span class="epaper-thumb-frame">';
 
@@ -797,7 +834,7 @@ class SK_EPaper_Renderer {
 
         ob_start();
         ?>
-        <article class="epaper-card-item">
+        <article class="epaper-card-item<?php echo SK_EPaper_Share::shows_on_cards() ? ' has-card-share' : ''; ?>">
             <?php
             /*
              * One link stretched over the whole card. The title, preview and
@@ -884,6 +921,8 @@ class SK_EPaper_Renderer {
 
                 <h3 class="epaper-card-title"><?php echo esc_html( $title ); ?></h3>
             </div>
+
+            <?php echo SK_EPaper_Share::render_card_share( $post_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in render_card_share(). ?>
         </article>
         <?php
         return ob_get_clean();

@@ -33,7 +33,10 @@
 				"sk_epaper_related_count": "3",
 				"sk_epaper_archive_per_page": "12",
 				"sk_epaper_header_bg": "#1e293b",
-				"sk_epaper_primary_color": "#c2410c"
+				"sk_epaper_primary_color": "#c2410c",
+				"sk_epaper_enable_share": "1",
+				"sk_epaper_share_position": "both",
+				"sk_epaper_share_on_cards": "1"
 			}
 		},
 		{

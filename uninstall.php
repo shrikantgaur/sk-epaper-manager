@@ -47,6 +47,16 @@ $sk_epaper_options = array(
     'sk_epaper_migration_progress',
     'sk_epaper_flush_rules_v120',
     'sk_epaper_flush_rules_v130',
+    'sk_epaper_installed_at',
+    'sk_epaper_review_status',
+    'sk_epaper_review_snooze_until',
+    'sk_epaper_flush_rules_v210',
+    'sk_epaper_enable_share',
+    'sk_epaper_share_networks',
+    'sk_epaper_output_og',
+    'sk_epaper_share_notice',
+    'sk_epaper_share_position',
+    'sk_epaper_share_on_cards',
 );
 
 foreach ( $sk_epaper_options as $sk_epaper_option ) {
@@ -70,6 +80,7 @@ foreach ( $sk_epaper_meta_keys as $sk_epaper_meta_key ) {
 // Cached archive lookups.
 delete_transient( 'sk_epaper_archive_months' );
 delete_transient( 'sk_epaper_available_dates' );
+delete_transient( 'sk_epaper_total_views' );
 
 // View dedupe transients.
 // phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange

@@ -114,11 +114,13 @@ class SK_EPaper_CPT {
      * @return void
      */
     public static function check_flush_rules() {
-        if ( '1' !== get_option( 'sk_epaper_flush_rules_v130' ) ) {
+        // v210 adds the /p/N/ page deep link rule.
+        if ( '1' !== get_option( 'sk_epaper_flush_rules_v210' ) ) {
             self::register_post_type();
             self::register_taxonomies();
+            SK_EPaper_Share::add_rewrite_rule();
             flush_rewrite_rules();
-            update_option( 'sk_epaper_flush_rules_v130', '1' );
+            update_option( 'sk_epaper_flush_rules_v210', '1' );
         }
     }
 
@@ -130,8 +132,14 @@ class SK_EPaper_CPT {
     public static function activate() {
         self::register_post_type();
         self::register_taxonomies();
+        SK_EPaper_Share::add_rewrite_rule();
         flush_rewrite_rules();
+        update_option( 'sk_epaper_flush_rules_v210', '1' );
 
+        SK_EPaper_Feedback::maybe_set_install_time();
+        // Before migrations: on a fresh install they stamp the schema version,
+        // which is what the share default uses to tell old sites from new.
+        SK_EPaper_Share::maybe_set_defaults();
         SK_EPaper_Migrations::maybe_upgrade();
     }
 

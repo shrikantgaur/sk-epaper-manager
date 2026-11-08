@@ -55,6 +55,23 @@ class SK_EPaper_Admin {
             'sk-epaper-settings',
             'sk_epaper_render_settings_page'
         );
+
+        // External link: epaper-admin.js points it at the form and opens it
+        // in a new tab; the load- hook redirects when JavaScript is off.
+        $feature_hook = add_submenu_page(
+            'edit.php?post_type=epaper',
+            __( 'Request a Feature', 'sk-epaper-manager' ),
+            __( 'Request a Feature', 'sk-epaper-manager' )
+                . ' <span class="dashicons dashicons-external sk-menu-external" aria-hidden="true"></span>'
+                . '<span class="screen-reader-text"> ' . __( '(opens in a new tab)', 'sk-epaper-manager' ) . '</span>',
+            'manage_options',
+            SK_EPaper_Feedback::FEATURE_PAGE,
+            array( 'SK_EPaper_Feedback', 'render_feature_request_page' )
+        );
+
+        if ( $feature_hook ) {
+            add_action( 'load-' . $feature_hook, array( 'SK_EPaper_Feedback', 'redirect_feature_request' ) );
+        }
     }
 
     /**
@@ -107,6 +124,8 @@ class SK_EPaper_Admin {
             array(
                 'ajax_url' => admin_url( 'admin-ajax.php' ),
                 'nonce'    => wp_create_nonce( 'sk_epaper_analytics_nonce' ),
+                'feature_request_url' => SK_EPaper_Feedback::get_url( 'feature_request' ),
+                'feature_request_page' => SK_EPaper_Feedback::FEATURE_PAGE,
                 'i18n'     => array(
                     /* translators: %d: Page number */
                     'page'          => __( 'Page %d', 'sk-epaper-manager' ),
